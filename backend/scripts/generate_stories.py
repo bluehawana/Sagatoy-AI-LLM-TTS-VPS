@@ -64,20 +64,27 @@ async def generate_story_audio(series_id: str, story_id: str, language: str = "s
     print(f"✅ Saved text to: {text_file}")
 
 
-async def generate_all_stories(language: str = "sv"):
+async def generate_stories_by_series(language: str = "sv", series_to_generate: str = "all"):
     """Generate all stories in the library.
 
     Args:
         language: Language code ('en' or 'sv')
+        series_to_generate: The specific series to generate ('trex', 'kanin', 'delfin') or 'all'.
     """
     print(f"\n🚀 Starting story generation for language: {language}")
-    print(f"📚 Total series: {len(STORY_SERIES)}")
+
+    stories_to_process = {}
+    if series_to_generate == "all":
+        stories_to_process = STORY_SERIES
+    elif series_to_generate in STORY_SERIES:
+        stories_to_process = {
+            series_to_generate: STORY_SERIES[series_to_generate]}
 
     total_stories = sum(len(series["stories"])
-                        for series in STORY_SERIES.values())
-    print(f"📖 Total stories: {total_stories}")
+                        for series in stories_to_process.values())
+    print(f"📖 Total stories to generate: {total_stories}")
 
-    for series_id, series_data in STORY_SERIES.items():
+    for series_id, series_data in stories_to_process.items():
         print(f"\n{'='*60}")
         print(f"📚 Series: {series_data['name']}")
         print(f"{'='*60}")
@@ -136,10 +143,10 @@ async def main():
 
     # Generate by language
     if args.language == "both":
-        await generate_all_stories("sv")
-        await generate_all_stories("en")
+        await generate_stories_by_series("sv", args.series)
+        await generate_stories_by_series("en", args.series)
     else:
-        await generate_all_stories(args.language)
+        await generate_stories_by_series(args.language, args.series)
 
 
 if __name__ == "__main__":
