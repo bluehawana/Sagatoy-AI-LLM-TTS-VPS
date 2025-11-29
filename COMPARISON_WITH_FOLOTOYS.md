@@ -6,7 +6,7 @@
 
 - ✅ **Multi-LLM Support** (Gemini, Groq, Ollama, Qwen, MiniMax)
 - ✅ **Story Generation** with Gemini (child-friendly, 500-750 words)
-- ✅ **Wake Word Detection** (hej toy, hey toy, hej leksak)
+- ✅ **Wake Word Detection** (Hej Saga, Hello Saga)
 - ✅ **Text-to-Speech** (Edge TTS with kindergarten-optimized voices)
 - ✅ **Weather Integration** (Open-Meteo API, child-friendly descriptions)
 - ✅ **Multi-language Support** (Swedish & English)
@@ -16,11 +16,19 @@
 - ✅ **Session Management**
 - ✅ **Device Authentication** (JWT tokens)
 
+### NEW: XiaoGPT-Inspired Features 🆕
+
+- ✅ **Conversation Context Manager** - Maintains chat history for natural conversations
+- ✅ **LLM Fallback Service** - Automatic failover (Groq → Gemini)
+- ✅ **Streaming TTS** - Start audio playback before full response (faster!)
+- ✅ **Provider Health Tracking** - Skip unhealthy providers temporarily
+
 ### Voice Optimization
 
 - ✅ **Kindergarten-friendly voices** (Sofie, Hillevi, Mattias)
 - ✅ **Adjustable speech rate** (-10% for clarity)
 - ✅ **Voice testing tools**
+- ✅ **Sentence-by-sentence streaming** - Play audio as it generates
 
 ### API Integrations
 
@@ -76,7 +84,7 @@ Based on typical AI toy implementations, FoloToys likely has:
 
 ### Advanced Features
 
-- ❌ **Conversation Memory** - Remember previous chats
+- ✅ **Conversation Memory** - Remember previous chats (NEW!)
 - ❌ **Emotion Detection** - Respond to child's mood
 - ❌ **Educational Games** - Interactive learning
 - ❌ **Sleep Timer** - Auto-shutoff

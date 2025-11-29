@@ -26,7 +26,7 @@
 
 ### 4. Wake Word Detection
 
-- ✅ **"Hej toy"** detection working
+- ✅ **"Hej Saga"** detection working
 - ✅ **Multiple wake words** supported
 - ✅ **Intent-based routing** implemented
 

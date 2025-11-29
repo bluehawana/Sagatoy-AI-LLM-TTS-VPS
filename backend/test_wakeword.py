@@ -1,19 +1,30 @@
-"""Test wake word detection and toy interaction."""
+"""Test wake word detection and toy interaction.
+
+Updated for SagaToy branding (www.sagatoy.com)
+Wake words: "Hej Saga", "Hello Saga", "Hey Saga"
+"""
 
 import asyncio
 from totoyai.services.gemini import gemini_service
 from totoyai.services.tts import tts_service
 
 
+# SagaToy wake words
+WAKE_WORDS = [
+    "hej saga",      # Swedish primary
+    "hello saga",    # English primary
+    "hey saga",      # English alternative
+]
+
+
 async def detect_wake_word(text: str) -> bool:
     """Detect if wake word is present in text.
 
-    Wake words: "hej toy", "hey toy", "hej leksak"
+    Wake words: "Hej Saga", "Hello Saga", "Hey Saga"
     """
     text_lower = text.lower()
-    wake_words = ["hej toy", "hey toy", "hej leksak"]
 
-    for wake_word in wake_words:
+    for wake_word in WAKE_WORDS:
         if wake_word in text_lower:
             return True
     return False
@@ -60,23 +71,53 @@ async def main():
     """Test wake word detection."""
 
     print("=" * 60)
-    print("🧸 ToToy AI - Wake Word Detection Test")
+    print("🧸 SagaToy - Wake Word Detection Test")
+    print("   Domain: www.sagatoy.com")
+    print("   Wake words: Hej Saga, Hello Saga, Hey Saga")
     print("=" * 60)
 
     # Test cases
     test_inputs = [
-        "Hej toy, kan du berätta en saga?",  # Should wake up
-        "Vad är klockan?",  # Should not wake up
-        "Hey toy, what's the weather like?",  # Should wake up (English)
-        "Hej leksak, hur mår du?",  # Should wake up (Swedish alternative)
+        ("Hej Saga, kan du berätta en saga?",
+         "sv", True),      # Swedish - should wake
+        ("Vad är klockan?", "sv", False),                        # No wake word
+        ("Hello Saga, what's the weather like?",
+         "en", True),   # English - should wake
+        # English alt - should wake
+        ("Hey Saga, tell me a story!", "en", True),
+        ("Random text without wake word", "en", False),          # No wake word
+        # Lowercase - should wake
+        ("hej saga, hur mår du idag?", "sv", True),
     ]
 
-    for user_input in test_inputs:
-        await toy_interaction(user_input, language="sv")
-        print()
+    print("\n📋 Testing wake word detection:\n")
 
+    passed = 0
+    failed = 0
+
+    for user_input, language, expected in test_inputs:
+        detected = await detect_wake_word(user_input)
+        status = "✅" if detected == expected else "❌"
+
+        if detected == expected:
+            passed += 1
+        else:
+            failed += 1
+
+        print(
+            f"{status} '{user_input[:40]}...' → Detected: {detected}, Expected: {expected}")
+
+    print(f"\n📊 Results: {passed}/{len(test_inputs)} tests passed")
+
+    # Now test full interaction with one example
+    print("\n" + "=" * 60)
+    print("🎤 Testing full interaction with Gemini + TTS:")
     print("=" * 60)
-    print("✅ Test complete!")
+
+    await toy_interaction("Hej Saga, kan du berätta en kort saga om en kanin?", language="sv")
+
+    print("\n" + "=" * 60)
+    print("✅ SagaToy wake word test complete!")
     print("=" * 60)
 
 

@@ -1,4 +1,4 @@
-# 🔧 ToToyAI Hardware Solution - Independent Design
+# 🔧 SagaToy Hardware Solution - Independent Design
 
 ## 🎯 Goal
 
@@ -88,9 +88,9 @@ Total BOM Cost: ~$13-15 per unit
 
 ```cpp
 // Custom wake words we can train:
-- "Hej Toy" (Swedish)
-- "Hey Toy" (English)
-- "Hej Leksak" (Swedish alternative)
+- "Hej Saga" (Swedish)
+- "Hello Saga" (English)
+- "Hey Saga" (English alternative)
 
 // Edge Impulse provides:
 - Model training platform
@@ -289,7 +289,7 @@ firmware/
 ```
 1. Power on toy
 2. No WiFi → Enter AP mode
-3. User connects phone to "ToToy-Setup-XXXX"
+3. User connects phone to "SagaToy-Setup-XXXX"
 4. Web interface opens (captive portal)
 5. User enters WiFi credentials
 6. Toy connects to WiFi
@@ -524,7 +524,7 @@ Retail Price:           $65-75
 ### Recommendations:
 
 1. File for design patents on our enclosure
-2. Trademark "ToToy" brand
+2. Trademark "SagaToy" brand (www.sagatoy.com)
 3. Open-source our firmware (builds community)
 4. Keep hardware design proprietary initially
 
@@ -550,7 +550,7 @@ Retail Price:           $65-75
 
 3. **Start Wake Word Training:**
 
-   - Record "Hej Toy" samples
+   - Record "Hej Saga" samples
    - Train initial model
    - Test on ESP32
 
