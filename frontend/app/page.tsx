@@ -13,7 +13,7 @@ export default function Page() {
       </div>
 
       {/* Header */}
-      <header className="mx-auto flex w-full max-w-7xl items-center justify-between px-6 py-8 lg:px-8">
+      <header className="mx-auto flex w-full max-w-7xl items-center justify-center px-6 py-8 lg:px-8">
         <div className="flex items-center">
           <Image
             src="/sagatoy_newlogo_ps.png"
@@ -25,12 +25,6 @@ export default function Page() {
             unoptimized
           />
         </div>
-        <Link
-          href="/info"
-          className="text-sm font-medium text-slate-700 hover:text-saga-purple transition"
-        >
-          Learn More
-        </Link>
       </header>
 
       {/* Main Content - Centered */}
@@ -104,14 +98,6 @@ export default function Page() {
             </p>
           </div>
 
-          {/* Learn More Link */}
-          <Link
-            href="/info"
-            className="inline-flex items-center gap-2 text-saga-purple font-medium hover:gap-3 transition-all"
-          >
-            Discover all features and details
-            <ArrowRight className="h-4 w-4" />
-          </Link>
         </div>
       </section>
 
