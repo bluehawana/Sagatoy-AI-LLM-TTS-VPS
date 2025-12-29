@@ -1,5 +1,5 @@
 // Cloudflare Pages Function to handle email subscriptions
-export async function onRequestPost(context) {
+export async function onRequestPost(context: any) {
   try {
     const formData = await context.request.formData();
     const email = formData.get('email');
