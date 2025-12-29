@@ -1,49 +1,68 @@
 // Cloudflare Pages Function to handle email subscriptions
-export async function onRequestPost(context: any) {
+interface Env {
+  WAITLIST?: KVNamespace;
+}
+
+export async function onRequestPost(context: { request: Request; env: Env }) {
   try {
     const formData = await context.request.formData();
     const email = formData.get('email');
 
-    if (!email || !email.includes('@')) {
+    if (!email || typeof email !== 'string' || !email.includes('@')) {
       return new Response(JSON.stringify({ error: 'Invalid email address' }), {
         status: 400,
         headers: { 'Content-Type': 'application/json' }
       });
     }
 
-    // Send email using Cloudflare's Email Routing or MailChannels
-    // For now, we'll use MailChannels (free for Cloudflare Workers)
-    const emailContent = {
-      personalizations: [{
-        to: [{ email: 'info@sagatoy.com', name: 'Sagatoy Team' }],
-      }],
-      from: {
-        email: 'notifications@sagatoy.com',
-        name: 'Sagatoy Waitlist'
-      },
-      subject: `New Waitlist Signup: ${email}`,
-      content: [{
-        type: 'text/plain',
-        value: `New user signed up for the waitlist!\n\nEmail: ${email}\n\nTimestamp: ${new Date().toISOString()}`
-      }]
+    // Simple email notification using fetch to a webhook or service
+    // For now, we'll just return success and log the email
+    // You can set up email forwarding in Cloudflare later
+
+    const emailData = {
+      email: email,
+      timestamp: new Date().toISOString(),
+      source: 'waitlist'
     };
 
-    // Send via MailChannels API
-    const mailResponse = await fetch('https://api.mailchannels.net/tx/v1/send', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(emailContent),
-    });
+    console.log('New waitlist signup:', emailData);
 
-    if (!mailResponse.ok) {
-      console.error('MailChannels error:', await mailResponse.text());
-      throw new Error('Failed to send notification email');
+    // Try to store in KV if available (optional)
+    try {
+      if (context.env.WAITLIST) {
+        await context.env.WAITLIST.put(
+          `signup:${email}`,
+          JSON.stringify(emailData)
+        );
+      }
+    } catch (kvError) {
+      console.log('KV storage not available, skipping storage');
     }
 
-    // Store in KV storage if needed (optional)
-    // await context.env.WAITLIST.put(email, JSON.stringify({ timestamp: Date.now() }));
+    // Send notification email using Resend API (if you add RESEND_API_KEY to env)
+    // Or use any other email service you prefer
+    const RESEND_API_KEY = context.env?.RESEND_API_KEY;
+
+    if (RESEND_API_KEY) {
+      try {
+        await fetch('https://api.resend.com/emails', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${RESEND_API_KEY}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            from: 'waitlist@sagatoy.com',
+            to: 'info@sagatoy.com',
+            subject: `New Waitlist Signup: ${email}`,
+            html: `<p><strong>New waitlist signup!</strong></p><p>Email: ${email}</p><p>Timestamp: ${emailData.timestamp}</p>`
+          }),
+        });
+      } catch (emailError) {
+        console.error('Email send failed:', emailError);
+        // Continue anyway - we still want to save the signup
+      }
+    }
 
     return new Response(JSON.stringify({
       success: true,
@@ -60,10 +79,14 @@ export async function onRequestPost(context: any) {
     console.error('Subscription error:', error);
     return new Response(JSON.stringify({
       error: 'Failed to process subscription',
-      message: error?.message || 'Unknown error'
+      message: error?.message || 'Unknown error',
+      details: error?.stack || ''
     }), {
       status: 500,
-      headers: { 'Content-Type': 'application/json' }
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+      }
     });
   }
 }
