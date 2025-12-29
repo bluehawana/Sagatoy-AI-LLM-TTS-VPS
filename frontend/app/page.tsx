@@ -33,13 +33,14 @@ export default function Page() {
       {/* Header */}
       <header className="mx-auto flex w-full max-w-7xl items-center justify-between px-6 py-6 lg:px-8">
         <div className="flex items-center gap-3">
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-saga-purple to-saga-sky shadow-lg ring-1 ring-white/40">
-            <Sparkles className="h-6 w-6 text-white" />
-          </div>
-          <div>
-            <h1 className="font-display text-2xl font-bold text-saga-ink">Sagatoy</h1>
-            <p className="text-xs text-slate-500">Nordic AI Companion</p>
-          </div>
+          <Image
+            src="/logo.svg"
+            alt="Sagatoy"
+            width={180}
+            height={60}
+            className="h-14 w-auto"
+            priority
+          />
         </div>
       </header>
 
@@ -156,12 +157,13 @@ export default function Page() {
       <footer className="border-t border-slate-200 bg-white">
         <div className="mx-auto max-w-7xl px-6 py-8 lg:px-8">
           <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
-            <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-saga-purple to-saga-sky">
-                <Sparkles className="h-5 w-5 text-white" />
-              </div>
-              <span className="font-display text-xl font-bold text-saga-ink">Sagatoy</span>
-            </div>
+            <Image
+              src="/logo.svg"
+              alt="Sagatoy"
+              width={150}
+              height={50}
+              className="h-10 w-auto"
+            />
 
             <div className="flex items-center gap-6 text-sm text-slate-600">
               <Link href="mailto:hello@sagatoy.com" className="hover:text-saga-purple transition">
