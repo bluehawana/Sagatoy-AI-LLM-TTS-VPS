@@ -1,4 +1,4 @@
-import { ArrowRight, Mail, Sparkles } from "lucide-react";
+import { Globe2, Mail, Sparkles } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -27,12 +27,12 @@ export default function Page() {
         </div>
       </header>
 
-      {/* Main Content - Centered */}
-      <section className="mx-auto flex min-h-[80vh] max-w-4xl items-center justify-center px-6 lg:px-8">
-        <div className="text-center space-y-12">
-          {/* Hero */}
-          <div className="space-y-6">
-            <h1 className="font-display text-6xl font-bold leading-tight text-saga-ink lg:text-7xl">
+      {/* Main Content */}
+      <section className="mx-auto max-w-7xl px-6 lg:px-8 py-12">
+        <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
+          {/* Left Column - Hero */}
+          <div className="space-y-8">
+            <h1 className="font-display text-5xl font-bold leading-tight text-saga-ink lg:text-6xl">
               Your Child&apos;s
               <br />
               <span className="bg-gradient-to-r from-saga-purple to-saga-sky bg-clip-text text-transparent">
@@ -40,64 +40,101 @@ export default function Page() {
               </span>
             </h1>
 
-            <p className="text-xl leading-relaxed text-slate-600 max-w-2xl mx-auto">
+            <p className="text-xl leading-relaxed text-slate-600">
               An intelligent toy that speaks 5 Nordic languages. No screens, just pure conversational magic for kids aged 4-12.
             </p>
+
+            {/* Key Benefits Cards */}
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="glass rounded-2xl p-6 border border-white/60 shadow-lg hover:shadow-xl transition">
+                <div className="text-3xl mb-3">🗣️</div>
+                <h3 className="font-semibold text-saga-purple mb-2">Natural Conversation</h3>
+                <p className="text-sm text-slate-600">Talks like a real friend, not a robot</p>
+              </div>
+              <div className="glass rounded-2xl p-6 border border-white/60 shadow-lg hover:shadow-xl transition">
+                <div className="text-3xl mb-3">🌍</div>
+                <h3 className="font-semibold text-saga-sky mb-2">5 Nordic Languages</h3>
+                <p className="text-sm text-slate-600">Swedish, Danish, Norwegian, Finnish, English</p>
+              </div>
+              <div className="glass rounded-2xl p-6 border border-white/60 shadow-lg hover:shadow-xl transition">
+                <div className="text-3xl mb-3">📱❌</div>
+                <h3 className="font-semibold text-saga-purple mb-2">100% Screen-Free</h3>
+                <p className="text-sm text-slate-600">Zero screen time, better for eyes and sleep</p>
+              </div>
+              <div className="glass rounded-2xl p-6 border border-white/60 shadow-lg hover:shadow-xl transition">
+                <div className="text-3xl mb-3">📚</div>
+                <h3 className="font-semibold text-saga-sky mb-2">Story Creation</h3>
+                <p className="text-sm text-slate-600">Personalized bedtime stories on demand</p>
+              </div>
+            </div>
+
+            {/* Status Badge */}
+            <div className="glass inline-flex items-center gap-3 rounded-2xl border border-white/60 bg-white/90 px-6 py-3 shadow-lg backdrop-blur">
+              <div className="flex h-3 w-3 items-center justify-center">
+                <span className="absolute inline-flex h-3 w-3 animate-ping rounded-full bg-green-400 opacity-75"></span>
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500"></span>
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-saga-ink">Coming Soon</p>
+                <p className="text-xs text-slate-500">Launching Q2 2026</p>
+              </div>
+            </div>
+
+            {/* Email Signup */}
+            <div className="space-y-3">
+              <p className="text-sm font-medium text-slate-700">Join the waitlist:</p>
+              <form className="flex max-w-lg gap-3">
+                <input
+                  type="email"
+                  placeholder="your@email.com"
+                  className="flex-1 rounded-full border-2 border-slate-200 bg-white px-6 py-3 text-sm transition focus:border-saga-purple focus:outline-none"
+                />
+                <button
+                  type="submit"
+                  className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-saga-purple to-saga-sky px-8 py-3 font-semibold text-white shadow-lg transition hover:scale-105 hover:shadow-xl"
+                >
+                  <Mail className="h-4 w-4" />
+                  Notify Me
+                </button>
+              </form>
+              <p className="text-xs text-slate-500">
+                We respect your privacy. Unsubscribe at any time.
+              </p>
+            </div>
           </div>
 
-          {/* Key Benefits - 3 Simple Points */}
-          <div className="grid gap-8 md:grid-cols-3 max-w-3xl mx-auto">
-            <div className="space-y-2">
-              <div className="text-4xl">🗣️</div>
-              <p className="font-semibold text-saga-purple">Natural Conversation</p>
-              <p className="text-sm text-slate-600">Talks like a real friend</p>
-            </div>
-            <div className="space-y-2">
-              <div className="text-4xl">🌍</div>
-              <p className="font-semibold text-saga-sky">5 Languages</p>
-              <p className="text-sm text-slate-600">Nordic + English</p>
-            </div>
-            <div className="space-y-2">
-              <div className="text-4xl">📱❌</div>
-              <p className="font-semibold text-saga-purple">Screen-Free</p>
-              <p className="text-sm text-slate-600">Zero screen time</p>
+          {/* Right Column - Product Image */}
+          <div className="relative">
+            <div className="glass relative overflow-hidden rounded-3xl p-8 shadow-2xl">
+              <div className="absolute -right-12 -top-12 h-48 w-48 rounded-full bg-gradient-to-br from-saga-purple/20 to-transparent blur-2xl" />
+              <div className="absolute -bottom-12 -left-12 h-48 w-48 rounded-full bg-gradient-to-tr from-saga-sky/20 to-transparent blur-2xl" />
+
+              <div className="relative aspect-square overflow-hidden rounded-2xl bg-gradient-to-br from-slate-100 to-slate-50">
+                <Image
+                  src="/sagatoy.jpeg"
+                  alt="Sagatoy AI companion"
+                  fill
+                  className="object-cover"
+                  priority
+                />
+              </div>
+
+              {/* Floating badges */}
+              <div className="absolute right-4 top-4 rounded-2xl border border-white/60 bg-white/90 px-4 py-3 shadow-lg backdrop-blur">
+                <div className="flex items-center gap-2">
+                  <Globe2 className="h-5 w-5 text-saga-sky" />
+                  <span className="text-sm font-semibold text-saga-ink">5 Languages</span>
+                </div>
+              </div>
+
+              <div className="absolute left-4 bottom-4 rounded-2xl border border-white/60 bg-white/90 px-4 py-3 shadow-lg backdrop-blur">
+                <div className="flex items-center gap-2">
+                  <Sparkles className="h-5 w-5 text-saga-purple" />
+                  <span className="text-sm font-semibold text-saga-ink">AI Powered</span>
+                </div>
+              </div>
             </div>
           </div>
-
-          {/* Status Badge */}
-          <div className="glass inline-flex items-center gap-3 rounded-2xl border border-white/60 bg-white/90 px-8 py-4 shadow-lg backdrop-blur">
-            <div className="flex h-3 w-3 items-center justify-center">
-              <span className="absolute inline-flex h-3 w-3 animate-ping rounded-full bg-green-400 opacity-75"></span>
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500"></span>
-            </div>
-            <div>
-              <p className="text-sm font-semibold text-saga-ink">Coming Soon</p>
-              <p className="text-xs text-slate-500">Launching Q2 2026</p>
-            </div>
-          </div>
-
-          {/* Email Signup */}
-          <div className="space-y-4">
-            <p className="text-sm font-medium text-slate-700">Join the waitlist:</p>
-            <form className="flex max-w-md mx-auto gap-3">
-              <input
-                type="email"
-                placeholder="your@email.com"
-                className="flex-1 rounded-full border-2 border-slate-200 bg-white px-6 py-4 text-sm transition focus:border-saga-purple focus:outline-none"
-              />
-              <button
-                type="submit"
-                className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-saga-purple to-saga-sky px-8 py-4 font-semibold text-white shadow-lg transition hover:scale-105 hover:shadow-xl"
-              >
-                <Mail className="h-4 w-4" />
-                Notify Me
-              </button>
-            </form>
-            <p className="text-xs text-slate-500">
-              We respect your privacy. Unsubscribe at any time.
-            </p>
-          </div>
-
         </div>
       </section>
 
