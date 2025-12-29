@@ -1,11 +1,11 @@
-import { ArrowRight, ShieldCheck, Sparkles } from "lucide-react";
+import { ArrowRight, CalendarClock, CloudSun, ShieldCheck, Sparkles, Stars } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
 const highlights = [
   {
     title: "AI Storytelling",
-    body: "Groq + Gemini powered tales tailored for kids 3-10 with Swedish-first voices.",
+    body: "Groq + Gemini powered tales tailored for kids 3-10 with Swedish-first voices and softer pacing.",
     icon: <Sparkles className="h-6 w-6 text-saga-purple" />
   },
   {
@@ -24,6 +24,24 @@ const roadmap = [
   { label: "Now", status: "Live VPS + secured APIs on sagatoy.com" },
   { label: "Next", status: "Full landing + parent portal" },
   { label: "Soon", status: "Batch of pilot devices for Swedish families" }
+];
+
+const upgrades = [
+  {
+    title: "Real conversations",
+    body: "Wake words (“Hej Saga”), natural back-and-forth, and gentle kid-safe replies.",
+    icon: <Stars className="h-5 w-5 text-saga-purple" />
+  },
+  {
+    title: "Weather + date/time",
+    body: "Quick answers about the day ahead, perfect before school runs.",
+    icon: <CloudSun className="h-5 w-5 text-saga-sky" />
+  },
+  {
+    title: "Storytelling",
+    body: "Warm Swedish voices telling original bedtime stories made for ages 3-10.",
+    icon: <CalendarClock className="h-5 w-5 text-saga-gold" />
+  }
 ];
 
 export default function Page() {
@@ -122,6 +140,52 @@ export default function Page() {
         </div>
       </section>
 
+      <section className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-6 pb-16 md:flex-row md:items-start">
+        <div className="glass w-full rounded-3xl p-6 md:w-1/2">
+          <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-saga-purple/10 px-3 py-1 text-xs font-semibold text-saga-purple">
+            Talk to me → full conversations
+          </div>
+          <h2 className="font-display text-3xl text-saga-ink">What&apos;s coming next</h2>
+          <p className="mt-3 text-sm leading-relaxed text-slate-600">
+            Today these toys echo you. Next build: they answer weather and time, tell cozy bedtime stories, and keep a gentle dialogue
+            going in Swedish or English—all powered by a Rust backend and MySQL for parent controls.
+          </p>
+          <div className="mt-5 space-y-3">
+            {upgrades.map((item) => (
+              <div key={item.title} className="flex items-start gap-3 rounded-2xl border border-slate-100 bg-white/90 p-3">
+                <div className="mt-0.5">{item.icon}</div>
+                <div>
+                  <p className="font-semibold text-saga-ink">{item.title}</p>
+                  <p className="text-sm text-slate-600">{item.body}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+          <p className="mt-4 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
+            Hosting on Vercel · DNS via Cloudflare · Live at sagatoy.com
+          </p>
+        </div>
+
+        <div className="glass relative w-full rounded-3xl p-4 md:w-1/2">
+          <div className="absolute right-4 top-4 rounded-full bg-saga-sky/10 px-3 py-1 text-xs font-semibold text-saga-sky">
+            Prototype snapshot
+          </div>
+          <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-gradient-to-br from-saga-purple/10 via-white to-saga-sky/10">
+            <Image
+              src="/talk-toys.svg"
+              alt="Two talk-to-me toys prototype"
+              fill
+              className="object-contain p-6"
+              priority
+            />
+          </div>
+          <p className="mt-3 text-xs text-slate-500">
+            Swap in your own photo by replacing <code className="rounded bg-slate-100 px-1">frontend/public/talk-toys.svg</code> with
+            the real image from your LinkedIn post.
+          </p>
+        </div>
+      </section>
+
       <section className="mx-auto grid w-full max-w-6xl gap-6 px-6 pb-16 md:grid-cols-3">
         {highlights.map((item) => (
           <div key={item.title} className="glass rounded-2xl p-6">
@@ -140,7 +204,7 @@ export default function Page() {
               <h2 className="font-display text-3xl text-saga-ink">Building in the open</h2>
             </div>
             <Link
-              href="https://github.com/bluehawana/ToToyAI-LLM-TTS-VPS"
+              href="https://github.com/bluehawana/Sagatoy-AI-LLM-TTS-VPS"
               className="inline-flex items-center gap-2 text-sm font-semibold text-saga-purple"
             >
               View backend progress

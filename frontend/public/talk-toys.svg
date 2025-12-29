@@ -1,0 +1,17 @@
+<svg width="640" height="480" viewBox="0 0 640 480" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">SagaToy prototype snapshot placeholder</title>
+  <desc id="desc">Placeholder frame for the talk-to-me toy photo. Replace this file with the real image.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8B5CF6" stop-opacity="0.12"/>
+      <stop offset="50%" stop-color="#ffffff" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#38BDF8" stop-opacity="0.18"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="640" height="480" fill="url(#bg)"/>
+  <rect x="40" y="40" width="560" height="360" rx="24" fill="#ffffff" opacity="0.82" stroke="#e5e7eb" stroke-width="2"/>
+  <rect x="80" y="90" width="480" height="220" rx="28" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2" stroke-dasharray="8 8"/>
+  <text x="320" y="190" text-anchor="middle" fill="#0f172a" font-family="Inter, system-ui, sans-serif" font-size="20" font-weight="700">SagaToy prototype photo</text>
+  <text x="320" y="222" text-anchor="middle" fill="#475569" font-family="Inter, system-ui, sans-serif" font-size="16">Replace this SVG with your real image</text>
+  <text x="320" y="260" text-anchor="middle" fill="#8B5CF6" font-family="Space Grotesk, Inter, sans-serif" font-size="14" font-weight="700">frontend/public/talk-toys.svg</text>
+</svg>
