@@ -115,31 +115,23 @@ export default function Page() {
       </section>
 
       {/* Footer - Simple */}
-      <footer className="border-t border-slate-200 bg-white mt-16">
+      <footer className="border-t border-slate-200 mt-16">
         <div className="mx-auto max-w-7xl px-6 py-8 lg:px-8">
-          <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
-            <div className="flex items-center">
+          <div className="flex flex-col items-center gap-6">
+            <div className="flex items-center bg-transparent">
               <Image
                 src="/sagatoy_logo_navbar_transparent_h256.png"
                 alt="Sagatoy"
                 width={256}
                 height={256}
                 className="h-26 w-auto"
+                style={{ background: 'transparent' }}
               />
             </div>
 
-            <div className="flex items-center gap-6 text-sm text-slate-600">
-              <Link href="/info" className="hover:text-saga-purple transition">
-                Full Info
-              </Link>
-              <Link href="mailto:hello@sagatoy.com" className="hover:text-saga-purple transition">
-                Contact
-              </Link>
+            <div className="text-center text-sm text-slate-500">
+              <p>© {new Date().getFullYear()} Sagatoy. Born in Gothenburg, Sweden 🇸🇪</p>
             </div>
-          </div>
-
-          <div className="mt-6 border-t border-slate-200 pt-6 text-center text-sm text-slate-500">
-            <p>© {new Date().getFullYear()} Sagatoy. Born in Gothenburg, Sweden 🇸🇪</p>
           </div>
         </div>
       </footer>

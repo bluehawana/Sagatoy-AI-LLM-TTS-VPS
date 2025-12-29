@@ -330,28 +330,23 @@ export default function Page() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-slate-200 bg-white mt-16">
+      <footer className="border-t border-slate-200 mt-16">
         <div className="mx-auto max-w-7xl px-6 py-12 lg:px-8">
           <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
-            <div className="flex items-center">
+            <div className="flex items-center bg-transparent">
               <Image
                 src="/sagatoy_logo_navbar_transparent_h256.png"
                 alt="Sagatoy - Born in Gothenburg, Sweden"
                 width={256}
                 height={256}
                 className="h-26 w-auto"
+                style={{ background: 'transparent' }}
               />
             </div>
 
             <div className="flex items-center gap-6 text-sm text-slate-600">
               <Link href="mailto:hello@sagatoy.com" className="hover:text-saga-purple transition">
                 Contact
-              </Link>
-              <Link href="#" className="hover:text-saga-purple transition">
-                About
-              </Link>
-              <Link href="#" className="hover:text-saga-purple transition">
-                Privacy
               </Link>
             </div>
           </div>
