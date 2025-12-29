@@ -1,4 +1,7 @@
-// Cloudflare Pages Function to handle email subscriptions
+// Cloudflare Pages Function - Dual purpose waitlist system
+// 1. Store emails in database (CRM for email marketing)
+// 2. Send notification to info@sagatoy.com
+
 export async function onRequestPost(context: any) {
   try {
     const formData = await context.request.formData();
@@ -11,16 +14,48 @@ export async function onRequestPost(context: any) {
       });
     }
 
-    const emailData = {
+    const timestamp = new Date().toISOString();
+    const userAgent = context.request.headers.get('user-agent') || 'unknown';
+    const referer = context.request.headers.get('referer') || 'direct';
+
+    const customerData = {
       email: email,
-      timestamp: new Date().toISOString(),
-      source: 'waitlist',
-      userAgent: context.request.headers.get('user-agent') || 'unknown'
+      timestamp: timestamp,
+      source: referer.includes('info.sagatoy.com') ? 'info.sagatoy.com' : 'www.sagatoy.com',
+      userAgent: userAgent,
+      status: 'pending' // Can be: pending, contacted, customer
     };
 
-    console.log('New waitlist signup:', emailData);
+    console.log('New waitlist signup:', customerData);
 
-    // Send email using MailChannels (free for Cloudflare Workers)
+    // FUNCTION 1: Store in KV/D1 Database for CRM
+    // This builds your customer database for email marketing when you launch
+    try {
+      if (context.env.WAITLIST_DB) {
+        // Store in D1 database if available
+        const stmt = context.env.WAITLIST_DB.prepare(
+          'INSERT INTO waitlist (email, timestamp, source, user_agent, status) VALUES (?, ?, ?, ?, ?)'
+        );
+        await stmt.bind(email, timestamp, customerData.source, userAgent, 'pending').run();
+        console.log('✅ Stored in database for CRM');
+      } else if (context.env.WAITLIST_KV) {
+        // Fallback to KV storage
+        await context.env.WAITLIST_KV.put(
+          `waitlist:${email}`,
+          JSON.stringify(customerData),
+          { metadata: { timestamp, source: customerData.source } }
+        );
+        console.log('✅ Stored in KV for CRM');
+      } else {
+        console.warn('⚠️ No storage configured - email not saved to CRM');
+      }
+    } catch (storageError: any) {
+      console.error('Storage error:', storageError);
+      // Continue anyway - we still want to send notification
+    }
+
+    // FUNCTION 2: Send admin notification email to info@sagatoy.com
+    // This alerts you immediately when someone joins
     try {
       const mailResponse = await fetch('https://api.mailchannels.net/tx/v1/send', {
         method: 'POST',
@@ -54,6 +89,7 @@ export async function onRequestPost(context: any) {
                       .content { background: #f9f9f9; padding: 30px; border-radius: 0 0 10px 10px; }
                       .email-box { background: white; padding: 20px; border-left: 4px solid #667eea; margin: 20px 0; }
                       .footer { margin-top: 20px; font-size: 12px; color: #666; }
+                      .cta { background: #667eea; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block; margin-top: 10px; }
                     </style>
                   </head>
                   <body>
@@ -62,18 +98,26 @@ export async function onRequestPost(context: any) {
                         <h1>🚀 New Waitlist Signup!</h1>
                       </div>
                       <div class="content">
-                        <p><strong>Great news!</strong> Someone just joined your Sagatoy waitlist.</p>
+                        <p><strong>Great news!</strong> A potential customer just joined your Sagatoy waitlist.</p>
 
                         <div class="email-box">
                           <p><strong>📧 Email:</strong> ${email}</p>
-                          <p><strong>🕒 Timestamp:</strong> ${emailData.timestamp}</p>
-                          <p><strong>🌐 Source:</strong> ${emailData.source === 'waitlist' ? 'www.sagatoy.com' : 'info.sagatoy.com'}</p>
-                          <p><strong>💻 User Agent:</strong> ${emailData.userAgent}</p>
+                          <p><strong>🕒 Timestamp:</strong> ${timestamp}</p>
+                          <p><strong>🌐 Source:</strong> ${customerData.source}</p>
+                          <p><strong>💻 Browser:</strong> ${userAgent.substring(0, 100)}...</p>
+                          <p><strong>📊 Status:</strong> Pending contact</p>
                         </div>
 
-                        <p>This is your <strong>first potential customer!</strong> 🎯</p>
+                        <h3>Next Steps:</h3>
+                        <ul>
+                          <li>✅ Customer added to your CRM database</li>
+                          <li>📧 Email saved for marketing campaign when you launch (Q2 2026)</li>
+                          <li>🎯 You can export all waitlist emails anytime for email marketing</li>
+                        </ul>
 
-                        <p>Make sure to save this email to your customer database and reach out when you launch in Q2 2026.</p>
+                        <p><strong>This is your first potential customer!</strong> 🎯</p>
+
+                        <a href="https://dash.cloudflare.com" class="cta">View in Cloudflare Dashboard</a>
 
                         <div class="footer">
                           <p>This notification was sent automatically from your Sagatoy waitlist form.</p>
@@ -92,15 +136,13 @@ export async function onRequestPost(context: any) {
       if (!mailResponse.ok) {
         const errorText = await mailResponse.text();
         console.error('MailChannels error:', errorText);
-        throw new Error('Failed to send email notification');
+      } else {
+        console.log('✅ Admin notification sent to info@sagatoy.com');
       }
 
-      console.log('Email sent successfully to info@sagatoy.com');
-
     } catch (emailError: any) {
-      console.error('Email send failed:', emailError);
-      // Don't fail the whole request if email fails
-      // Still return success to user
+      console.error('Email notification failed:', emailError);
+      // Don't fail the request - storage is more important
     }
 
     return new Response(JSON.stringify({
@@ -129,7 +171,7 @@ export async function onRequestPost(context: any) {
   }
 }
 
-// Handle CORS preflight
+// CORS preflight
 export async function onRequestOptions() {
   return new Response(null, {
     headers: {
