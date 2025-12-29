@@ -16,12 +16,13 @@ export default function Page() {
       <header className="mx-auto flex w-full max-w-7xl items-center justify-between px-6 py-8 lg:px-8">
         <div className="flex items-center">
           <Image
-            src="/sagatoy_logo_navbar_transparent_h512.png"
+            src="/sagatoy_newlogo_ps.png"
             alt="Sagatoy - Born in Gothenburg, Sweden"
-            width={512}
-            height={512}
-            className="h-32 w-auto"
+            width={1536}
+            height={1536}
+            className="h-32 w-32"
             priority
+            unoptimized
           />
         </div>
         <Link
@@ -115,19 +116,17 @@ export default function Page() {
       </section>
 
       {/* Footer - Simple */}
-      <footer className="border-t border-slate-200 mt-16">
+      <footer className="border-t border-slate-200 mt-16 bg-transparent">
         <div className="mx-auto max-w-7xl px-6 py-8 lg:px-8">
           <div className="flex flex-col items-center gap-6">
-            <div className="flex items-center bg-transparent">
-              <Image
-                src="/sagatoy_logo_navbar_transparent_h256.png"
-                alt="Sagatoy"
-                width={256}
-                height={256}
-                className="h-26 w-auto"
-                style={{ background: 'transparent' }}
-              />
-            </div>
+            <Image
+              src="/sagatoy_newlogo_ps.png"
+              alt="Sagatoy"
+              width={1536}
+              height={1536}
+              className="h-24 w-24"
+              unoptimized
+            />
 
             <div className="text-center text-sm text-slate-500">
               <p>© {new Date().getFullYear()} Sagatoy. Born in Gothenburg, Sweden 🇸🇪</p>
