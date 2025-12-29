@@ -54,14 +54,13 @@ export default function Page() {
 
       {/* Header */}
       <header className="mx-auto flex w-full max-w-7xl items-center justify-between px-6 py-6 lg:px-8">
-        <div className="relative h-16 overflow-hidden" style={{width: '380px'}}>
+        <div className="flex items-center">
           <Image
             src="/newlogoo.png"
             alt="Sagatoy - Born in Gothenburg, Sweden"
-            width={760}
-            height={240}
-            className="absolute"
-            style={{left: '-380px', top: '0'}}
+            width={200}
+            height={63}
+            className="h-16 w-auto"
             priority
           />
         </div>
@@ -132,7 +131,7 @@ export default function Page() {
               </div>
               <div>
                 <p className="text-sm font-semibold text-saga-ink">Currently in Development</p>
-                <p className="text-xs text-slate-500">Launching Q2 2025</p>
+                <p className="text-xs text-slate-500">Launching Q2 2026</p>
               </div>
             </div>
 
@@ -302,14 +301,13 @@ export default function Page() {
       <footer className="border-t border-slate-200 bg-white mt-16">
         <div className="mx-auto max-w-7xl px-6 py-12 lg:px-8">
           <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
-            <div className="relative h-14 overflow-hidden" style={{width: '340px'}}>
+            <div className="flex items-center">
               <Image
                 src="/newlogoo.png"
                 alt="Sagatoy - Born in Gothenburg, Sweden"
-                width={680}
-                height={240}
-                className="absolute"
-                style={{left: '-340px', top: '0'}}
+                width={180}
+                height={57}
+                className="h-12 w-auto"
               />
             </div>
 
