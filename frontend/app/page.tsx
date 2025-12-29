@@ -56,11 +56,11 @@ export default function Page() {
       <header className="mx-auto flex w-full max-w-7xl items-center justify-between px-6 py-6 lg:px-8">
         <div className="flex items-center">
           <Image
-            src="/newlogoo.png"
+            src="/sagatoy_logo_navbar_transparent_h512.png"
             alt="Sagatoy - Born in Gothenburg, Sweden"
-            width={400}
-            height={126}
-            className="h-32 w-auto"
+            width={512}
+            height={512}
+            className="h-28 w-auto"
             priority
           />
         </div>
@@ -303,11 +303,11 @@ export default function Page() {
           <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
             <div className="flex items-center">
               <Image
-                src="/newlogoo.png"
+                src="/sagatoy_logo_navbar_transparent_h256.png"
                 alt="Sagatoy - Born in Gothenburg, Sweden"
-                width={300}
-                height={95}
-                className="h-24 w-auto"
+                width={256}
+                height={256}
+                className="h-20 w-auto"
               />
             </div>
 
