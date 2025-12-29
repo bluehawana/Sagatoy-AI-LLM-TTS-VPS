@@ -193,6 +193,50 @@ export default function Page() {
         </div>
       </section>
 
+      {/* Benefits / Slogans Section */}
+      <section className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
+        <div className="glass rounded-3xl p-12 text-center border border-white/60 shadow-2xl">
+          <h3 className="font-display text-3xl font-bold text-saga-ink mb-8 lg:text-4xl">
+            Screen-Free Magic for Growing Minds
+          </h3>
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 max-w-5xl mx-auto">
+            <div className="space-y-3">
+              <div className="text-4xl">📱❌</div>
+              <p className="text-lg font-semibold text-saga-purple">Less Screen Time</p>
+              <p className="text-slate-600">More time with Sagatoy means less time with iPad and iPhone</p>
+            </div>
+            <div className="space-y-3">
+              <div className="text-4xl">👀✨</div>
+              <p className="text-lg font-semibold text-saga-sky">Better Eye Health</p>
+              <p className="text-slate-600">Zero screen exposure—no concerns about vision impairment or eye strain</p>
+            </div>
+            <div className="space-y-3">
+              <div className="text-4xl">💤🌙</div>
+              <p className="text-lg font-semibold text-saga-purple">Better Sleep</p>
+              <p className="text-slate-600">No blue light before bed—just soothing stories and gentle conversations</p>
+            </div>
+            <div className="space-y-3">
+              <div className="text-4xl">🧠💡</div>
+              <p className="text-lg font-semibold text-saga-sky">Active Imagination</p>
+              <p className="text-slate-600">Stimulates creativity through conversation, not passive watching</p>
+            </div>
+            <div className="space-y-3">
+              <div className="text-4xl">🤗💬</div>
+              <p className="text-lg font-semibold text-saga-purple">Real Connection</p>
+              <p className="text-slate-600">Encourages dialogue and language development naturally</p>
+            </div>
+            <div className="space-y-3">
+              <div className="text-4xl">😌🛡️</div>
+              <p className="text-lg font-semibold text-saga-sky">Parent Peace of Mind</p>
+              <p className="text-slate-600">Safe, monitored, educational—everything parents want for their kids</p>
+            </div>
+          </div>
+          <div className="mt-10 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-saga-purple to-saga-sky px-6 py-3 text-white shadow-lg">
+            <span className="text-lg font-semibold">No screens. Just pure play and learning.</span>
+          </div>
+        </div>
+      </section>
+
       {/* Features Preview */}
       <section className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
         <div className="text-center mb-12">
