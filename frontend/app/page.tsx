@@ -60,10 +60,39 @@ export default function Page() {
             alt="Sagatoy - Born in Gothenburg, Sweden"
             width={512}
             height={512}
-            className="h-28 w-auto"
+            className="h-24 w-auto"
             priority
           />
         </div>
+
+        {/* Navigation */}
+        <nav className="hidden md:flex items-center gap-8">
+          <Link href="#features" className="text-sm font-medium text-slate-700 hover:text-saga-purple transition">
+            Features
+          </Link>
+          <Link href="#benefits" className="text-sm font-medium text-slate-700 hover:text-saga-purple transition">
+            Benefits
+          </Link>
+          <Link href="#about" className="text-sm font-medium text-slate-700 hover:text-saga-purple transition">
+            About
+          </Link>
+          <Link href="mailto:hello@sagatoy.com" className="text-sm font-medium text-slate-700 hover:text-saga-purple transition">
+            Contact
+          </Link>
+          <a
+            href="#notify"
+            className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-saga-purple to-saga-sky px-6 py-2.5 text-sm font-semibold text-white shadow-lg transition hover:scale-105 hover:shadow-xl"
+          >
+            <Mail className="h-4 w-4" />
+            Get Early Access
+          </a>
+        </nav>
+
+        {/* Mobile Menu Button */}
+        <button className="md:hidden inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-saga-purple to-saga-sky px-5 py-2 text-sm font-semibold text-white shadow-lg">
+          <Mail className="h-4 w-4" />
+          Join Waitlist
+        </button>
       </header>
 
       {/* Main Content */}
@@ -136,7 +165,7 @@ export default function Page() {
             </div>
 
             {/* Email Signup */}
-            <div className="space-y-3">
+            <div id="notify" className="space-y-3 scroll-mt-20">
               <p className="text-sm font-medium text-slate-700">Get notified when we launch:</p>
               <form className="flex max-w-md gap-3">
                 <input
@@ -194,7 +223,7 @@ export default function Page() {
       </section>
 
       {/* Benefits / Slogans Section */}
-      <section className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
+      <section id="benefits" className="mx-auto max-w-7xl px-6 py-16 lg:px-8 scroll-mt-20">
         <div className="glass rounded-3xl p-12 text-center border border-white/60 shadow-2xl">
           <h3 className="font-display text-3xl font-bold text-saga-ink mb-8 lg:text-4xl">
             Screen-Free Magic for Growing Minds
@@ -238,7 +267,7 @@ export default function Page() {
       </section>
 
       {/* Features Preview */}
-      <section className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
+      <section id="features" className="mx-auto max-w-7xl px-6 py-16 lg:px-8 scroll-mt-20">
         <div className="text-center mb-12">
           <h3 className="font-display text-3xl font-bold text-saga-ink mb-3">
             What to Expect
@@ -262,7 +291,7 @@ export default function Page() {
       </section>
 
       {/* Why Nordic Section */}
-      <section className="mx-auto max-w-7xl px-6 py-16 lg:px-8 bg-gradient-to-b from-transparent to-slate-100/50 rounded-3xl">
+      <section id="about" className="mx-auto max-w-7xl px-6 py-16 lg:px-8 bg-gradient-to-b from-transparent to-slate-100/50 rounded-3xl scroll-mt-20">
         <div className="max-w-3xl mx-auto text-center space-y-6">
           <h3 className="font-display text-3xl font-bold text-saga-ink mb-4">
             Why Nordic?
