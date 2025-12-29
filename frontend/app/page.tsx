@@ -10,6 +10,19 @@ export default function Page() {
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [message, setMessage] = useState('');
 
+  // Waitlist modal state
+  const [showWaitlistModal, setShowWaitlistModal] = useState(false);
+  const [waitlistForm, setWaitlistForm] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    country: '',
+    interests: ''
+  });
+  const [waitlistStatus, setWaitlistStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [waitlistMessage, setWaitlistMessage] = useState('');
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus('loading');
@@ -38,6 +51,48 @@ export default function Page() {
       setMessage('Failed to submit. Please try again.');
     }
   };
+
+  const handleWaitlistSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setWaitlistStatus('loading');
+
+    try {
+      const formData = new FormData();
+      formData.append('firstName', waitlistForm.firstName);
+      formData.append('lastName', waitlistForm.lastName);
+      formData.append('email', waitlistForm.email);
+      formData.append('phone', waitlistForm.phone);
+      formData.append('country', waitlistForm.country);
+      formData.append('interests', waitlistForm.interests);
+
+      const response = await fetch('/api/waitlist', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setWaitlistStatus('success');
+        setWaitlistMessage(data.message || 'Thank you! You\'re on our waitlist.');
+        setWaitlistForm({
+          firstName: '',
+          lastName: '',
+          email: '',
+          phone: '',
+          country: '',
+          interests: ''
+        });
+        setTimeout(() => setShowWaitlistModal(false), 3000);
+      } else {
+        setWaitlistStatus('error');
+        setWaitlistMessage(data.error || 'Something went wrong. Please try again.');
+      }
+    } catch (error) {
+      setWaitlistStatus('error');
+      setWaitlistMessage('Failed to submit. Please try again.');
+    }
+  };
   return (
     <main className="relative isolate min-h-screen overflow-hidden bg-gradient-to-b from-slate-50 via-white to-slate-50">
       {/* Animated background */}
@@ -63,13 +118,13 @@ export default function Page() {
 
         {/* Right side - CTA Button */}
         <div className="flex items-center gap-6">
-          <a
-            href="#waitlist"
+          <button
+            onClick={() => setShowWaitlistModal(true)}
             className="hidden sm:inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-saga-purple to-saga-sky px-6 py-2.5 text-sm font-semibold text-white shadow-lg transition hover:scale-105 hover:shadow-xl"
           >
             <Mail className="h-4 w-4" />
             Join Waitlist
-          </a>
+          </button>
         </div>
       </header>
 
@@ -213,6 +268,149 @@ export default function Page() {
           </div>
         </div>
       </footer>
+
+      {/* Waitlist Modal */}
+      {showWaitlistModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+          <div className="relative max-w-2xl w-full bg-white rounded-3xl shadow-2xl max-h-[90vh] overflow-y-auto">
+            {/* Close button */}
+            <button
+              onClick={() => setShowWaitlistModal(false)}
+              className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 transition"
+            >
+              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            {/* Modal content */}
+            <div className="p-8">
+              <div className="text-center mb-8">
+                <h2 className="text-3xl font-bold text-saga-ink mb-2">Join Our Waitlist</h2>
+                <p className="text-slate-600">Get early access to Sagatoy and exclusive launch updates</p>
+              </div>
+
+              <form onSubmit={handleWaitlistSubmit} className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {/* First Name */}
+                  <div>
+                    <label htmlFor="firstName" className="block text-sm font-medium text-slate-700 mb-2">
+                      First Name *
+                    </label>
+                    <input
+                      type="text"
+                      id="firstName"
+                      required
+                      value={waitlistForm.firstName}
+                      onChange={(e) => setWaitlistForm({...waitlistForm, firstName: e.target.value})}
+                      className="w-full rounded-lg border-2 border-slate-200 bg-white px-4 py-3 text-sm transition focus:border-saga-purple focus:outline-none"
+                      placeholder="John"
+                    />
+                  </div>
+
+                  {/* Last Name */}
+                  <div>
+                    <label htmlFor="lastName" className="block text-sm font-medium text-slate-700 mb-2">
+                      Last Name *
+                    </label>
+                    <input
+                      type="text"
+                      id="lastName"
+                      required
+                      value={waitlistForm.lastName}
+                      onChange={(e) => setWaitlistForm({...waitlistForm, lastName: e.target.value})}
+                      className="w-full rounded-lg border-2 border-slate-200 bg-white px-4 py-3 text-sm transition focus:border-saga-purple focus:outline-none"
+                      placeholder="Doe"
+                    />
+                  </div>
+                </div>
+
+                {/* Email */}
+                <div>
+                  <label htmlFor="waitlistEmail" className="block text-sm font-medium text-slate-700 mb-2">
+                    Email Address *
+                  </label>
+                  <input
+                    type="email"
+                    id="waitlistEmail"
+                    required
+                    value={waitlistForm.email}
+                    onChange={(e) => setWaitlistForm({...waitlistForm, email: e.target.value})}
+                    className="w-full rounded-lg border-2 border-slate-200 bg-white px-4 py-3 text-sm transition focus:border-saga-purple focus:outline-none"
+                    placeholder="john@example.com"
+                  />
+                </div>
+
+                {/* Phone */}
+                <div>
+                  <label htmlFor="phone" className="block text-sm font-medium text-slate-700 mb-2">
+                    Phone Number *
+                  </label>
+                  <input
+                    type="tel"
+                    id="phone"
+                    required
+                    value={waitlistForm.phone}
+                    onChange={(e) => setWaitlistForm({...waitlistForm, phone: e.target.value})}
+                    className="w-full rounded-lg border-2 border-slate-200 bg-white px-4 py-3 text-sm transition focus:border-saga-purple focus:outline-none"
+                    placeholder="+46 70 123 4567"
+                  />
+                </div>
+
+                {/* Country */}
+                <div>
+                  <label htmlFor="country" className="block text-sm font-medium text-slate-700 mb-2">
+                    Country (Optional)
+                  </label>
+                  <input
+                    type="text"
+                    id="country"
+                    value={waitlistForm.country}
+                    onChange={(e) => setWaitlistForm({...waitlistForm, country: e.target.value})}
+                    className="w-full rounded-lg border-2 border-slate-200 bg-white px-4 py-3 text-sm transition focus:border-saga-purple focus:outline-none"
+                    placeholder="Sweden"
+                  />
+                </div>
+
+                {/* Interests */}
+                <div>
+                  <label htmlFor="interests" className="block text-sm font-medium text-slate-700 mb-2">
+                    What interests you most about Sagatoy? (Optional)
+                  </label>
+                  <textarea
+                    id="interests"
+                    value={waitlistForm.interests}
+                    onChange={(e) => setWaitlistForm({...waitlistForm, interests: e.target.value})}
+                    rows={3}
+                    className="w-full rounded-lg border-2 border-slate-200 bg-white px-4 py-3 text-sm transition focus:border-saga-purple focus:outline-none"
+                    placeholder="Screen-free learning, Nordic languages, etc."
+                  />
+                </div>
+
+                {/* Submit button */}
+                <button
+                  type="submit"
+                  disabled={waitlistStatus === 'loading'}
+                  className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-saga-purple to-saga-sky px-8 py-4 font-semibold text-white shadow-lg transition hover:scale-105 hover:shadow-xl disabled:opacity-50 disabled:hover:scale-100"
+                >
+                  {waitlistStatus === 'loading' ? 'Submitting...' : 'Get Early Access'}
+                </button>
+
+                {/* Status message */}
+                {waitlistMessage && (
+                  <p className={`text-center text-sm ${waitlistStatus === 'success' ? 'text-green-600' : 'text-red-600'}`}>
+                    {waitlistMessage}
+                  </p>
+                )}
+
+                <p className="text-xs text-center text-slate-500">
+                  We&apos;ll contact you before launch in Q2 2026. Your information is secure and will never be shared.
+                </p>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 }
