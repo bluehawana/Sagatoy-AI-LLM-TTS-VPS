@@ -54,13 +54,14 @@ export default function Page() {
 
       {/* Header */}
       <header className="mx-auto flex w-full max-w-7xl items-center justify-between px-6 py-6 lg:px-8">
-        <div className="flex items-center gap-3">
+        <div className="relative h-16 overflow-hidden" style={{width: '380px'}}>
           <Image
-            src="/logo.svg"
-            alt="Sagatoy"
-            width={200}
-            height={67}
-            className="h-16 w-auto"
+            src="/newlogoo.png"
+            alt="Sagatoy - Born in Gothenburg, Sweden"
+            width={760}
+            height={240}
+            className="absolute"
+            style={{left: '-380px', top: '0'}}
             priority
           />
         </div>
@@ -301,13 +302,16 @@ export default function Page() {
       <footer className="border-t border-slate-200 bg-white mt-16">
         <div className="mx-auto max-w-7xl px-6 py-12 lg:px-8">
           <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
-            <Image
-              src="/logo.svg"
-              alt="Sagatoy"
-              width={180}
-              height={60}
-              className="h-12 w-auto"
-            />
+            <div className="relative h-14 overflow-hidden" style={{width: '340px'}}>
+              <Image
+                src="/newlogoo.png"
+                alt="Sagatoy - Born in Gothenburg, Sweden"
+                width={680}
+                height={240}
+                className="absolute"
+                style={{left: '-340px', top: '0'}}
+              />
+            </div>
 
             <div className="flex items-center gap-6 text-sm text-slate-600">
               <Link href="mailto:hello@sagatoy.com" className="hover:text-saga-purple transition">
@@ -359,9 +363,6 @@ export default function Page() {
 
           <div className="mt-8 border-t border-slate-200 pt-6 text-center text-sm text-slate-500">
             <p>© {new Date().getFullYear()} Sagatoy. All rights reserved.</p>
-            <p className="mt-2 text-xs flex items-center justify-center gap-1">
-              Made with <Heart className="h-3 w-3 text-red-500 fill-red-500" /> in Gothenburg, Sweden 🇸🇪
-            </p>
           </div>
         </div>
       </footer>
