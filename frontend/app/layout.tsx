@@ -10,8 +10,8 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "SagaToy | AI Storytelling Companion",
-  description: "SagaToy is the magical AI storytelling friend for kids. Under construction — coming soon."
+  title: "Sagatoy | Nordic AI Companion for Kids",
+  description: "Transform classic plush toys into AI-powered friends that speak 5 Nordic languages. Perfect for kids aged 4-12. Wake word activated, no apps needed."
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
