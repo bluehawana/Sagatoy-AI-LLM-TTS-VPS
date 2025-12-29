@@ -21,7 +21,7 @@ async def test_conversation_context():
     print("🧠 Testing Conversation Context Manager")
     print("="*60)
 
-    from totoyai.services.conversation_context import conversation_manager
+    from sagatoyai.services.conversation_context import conversation_manager
 
     # Create a new context
     session_id = "test-session-123"
@@ -71,7 +71,7 @@ async def test_llm_fallback():
     print("🔄 Testing LLM Fallback Service")
     print("="*60)
 
-    from totoyai.services.llm_fallback import llm_fallback_service, LLMProvider
+    from sagatoyai.services.llm_fallback import llm_fallback_service, LLMProvider
 
     # Check provider status
     status = llm_fallback_service.get_provider_status()
@@ -117,7 +117,7 @@ async def test_streaming_tts():
     print("🔊 Testing Streaming TTS Service")
     print("="*60)
 
-    from totoyai.services.streaming_tts import streaming_tts_service
+    from sagatoyai.services.streaming_tts import streaming_tts_service
 
     test_text = "Hej! Jag är Saga. Vill du höra en rolig saga om en liten kanin?"
 
@@ -167,9 +167,9 @@ async def test_full_pipeline():
     print("🚀 Testing Full Pipeline")
     print("="*60)
 
-    from totoyai.services.conversation_context import conversation_manager
-    from totoyai.services.llm_fallback import llm_fallback_service
-    from totoyai.services.streaming_tts import streaming_tts_service
+    from sagatoyai.services.conversation_context import conversation_manager
+    from sagatoyai.services.llm_fallback import llm_fallback_service
+    from sagatoyai.services.streaming_tts import streaming_tts_service
 
     # Create session
     session_id = "pipeline-test-001"
@@ -221,7 +221,7 @@ async def test_full_pipeline():
 async def main():
     """Run all tests."""
     print("\n" + "="*60)
-    print("🧪 ToToyAI New Features Test Suite")
+    print("🧪 Sagatoyai New Features Test Suite")
     print("="*60)
     print("\nTesting features inspired by XiaoGPT:")
     print("1. Conversation Context Manager")

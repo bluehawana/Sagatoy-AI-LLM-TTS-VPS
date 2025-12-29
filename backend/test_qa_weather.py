@@ -1,10 +1,10 @@
 """Test Q&A with weather integration - bilingual support."""
 
 import asyncio
-from totoyai.services.gemini import gemini_service
-from totoyai.services.weather import weather_service
-from totoyai.services.tts import tts_service
-from totoyai.services.language import detect_language
+from sagatoyai.services.gemini import gemini_service
+from sagatoyai.services.weather import weather_service
+from sagatoyai.services.tts import tts_service
+from sagatoyai.services.language import detect_language
 
 
 async def handle_weather_query(user_input: str, detected_language: str):

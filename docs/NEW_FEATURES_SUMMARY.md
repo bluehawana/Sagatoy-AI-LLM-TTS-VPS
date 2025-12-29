@@ -2,7 +2,7 @@
 
 ## Overview
 
-Three new features have been added to ToToyAI backend, inspired by Yihong's XiaoGPT project:
+Three new features have been added to Sagatoyai backend, inspired by Yihong's XiaoGPT project:
 
 1. **Conversation Context Manager** - Maintains chat history for natural conversations
 2. **LLM Fallback Service** - Automatic failover between providers

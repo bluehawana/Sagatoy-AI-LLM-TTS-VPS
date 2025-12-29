@@ -6,7 +6,7 @@ from typing import Optional
 
 import redis.asyncio as redis
 
-from totoyai.models import Message, SessionContext
+from sagatoyai.models import Message, SessionContext
 
 SESSION_EXPIRE_MINUTES = 30
 

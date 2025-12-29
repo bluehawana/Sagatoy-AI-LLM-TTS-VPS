@@ -6,7 +6,7 @@ from typing import Optional, Tuple
 
 from groq import Groq
 
-from totoyai.models import Intent
+from sagatoyai.models import Intent
 
 logger = logging.getLogger(__name__)
 

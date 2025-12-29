@@ -3,7 +3,7 @@
 import pytest
 from fastapi.testclient import TestClient
 
-from totoyai.main import app
+from sagatoyai.main import app
 
 
 @pytest.fixture

@@ -5,7 +5,7 @@ from datetime import datetime
 
 import httpx
 
-from totoyai.models import WeatherData
+from sagatoyai.models import WeatherData
 
 logger = logging.getLogger(__name__)
 

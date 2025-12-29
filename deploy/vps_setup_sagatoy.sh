@@ -3,7 +3,7 @@
 ################################################################################
 # SagaToy VPS Setup Script
 #
-# This script sets up your VPS for deploying the ToToyAI FastAPI backend
+# This script sets up your VPS for deploying the Sagatoyai FastAPI backend
 #
 # Requirements:
 # - Ubuntu 22.04/24.04 LTS
@@ -274,7 +274,7 @@ print_info "Increasing file descriptor limits for production..."
 # Add limits for better performance
 cat >> /etc/security/limits.conf << 'EOF'
 
-# SagaToy/ToToyAI limits
+# SagaToy/Sagatoyai limits
 * soft nofile 65536
 * hard nofile 65536
 * soft nproc 65536
@@ -309,7 +309,7 @@ echo "   Point sagatoy.com A record to: $(curl -s ifconfig.me)"
 echo ""
 echo "2. Clone your repository:"
 echo "   cd $APP_DIR"
-echo "   git clone https://github.com/yourusername/ToToyAI-LLM-TTS-VPS.git ."
+echo "   git clone https://github.com/yourusername/Sagatoyai-LLM-TTS-VPS.git ."
 echo ""
 echo "3. Set up environment variables:"
 echo "   See: deployment_guide.md"

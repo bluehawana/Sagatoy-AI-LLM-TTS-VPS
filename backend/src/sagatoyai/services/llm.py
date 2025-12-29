@@ -6,7 +6,7 @@ from typing import Optional
 
 import httpx
 
-from totoyai.models import Intent
+from sagatoyai.models import Intent
 
 logger = logging.getLogger(__name__)
 

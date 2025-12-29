@@ -1,8 +1,8 @@
-# ToToyAI - AI-Powered Plush Toys Platform
+# Sagatoyai - AI-Powered Plush Toys Platform
 
 **The First AI-Powered Plush Toy Platform in Sweden and EU**
 
-ToToyAI brings artificial intelligence to traditional plush toys, creating interactive companions that can talk, tell stories, answer questions, and engage with children through natural conversation.
+Sagatoyai brings artificial intelligence to traditional plush toys, creating interactive companions that can talk, tell stories, answer questions, and engage with children through natural conversation.
 
 🌐 **Live**: https://sagatoy.com
 
@@ -33,9 +33,9 @@ ToToyAI brings artificial intelligence to traditional plush toys, creating inter
 ## 📦 Project Structure
 
 ```
-ToToyAI-LLM-TTS-VPS/
+Sagatoyai/
 ├── backend/                    # FastAPI backend
-│   ├── src/totoyai/
+│   ├── src/sagatoyai/
 │   │   ├── api/               # REST API endpoints
 │   │   ├── models/            # Data models
 │   │   └── services/          # STT, LLM, TTS services
@@ -130,8 +130,8 @@ The VPS is hardened with multiple security layers:
 
 ```bash
 # Clone
-git clone https://github.com/bluehawana/ToToyAI-LLM-TTS-VPS.git
-cd ToToyAI-LLM-TTS-VPS/backend
+git clone https://github.com/bluehawana/Sagatoyai.git
+cd Sagatoyai/backend
 
 # Setup
 python -m venv venv
@@ -143,7 +143,7 @@ cp .env.example .env
 # Edit .env with your API keys
 
 # Run
-uvicorn totoyai.main:app --reload
+uvicorn sagatoyai.main:app --reload
 
 # Test
 pytest -v
@@ -203,7 +203,7 @@ TTS_VOICE_EN=en-US-JennyNeural
 
 ## 📄 License
 
-Copyright © 2024 ToToyAI Project. All rights reserved.
+Copyright © 2024 Sagatoyai Project. All rights reserved.
 
 ---
 

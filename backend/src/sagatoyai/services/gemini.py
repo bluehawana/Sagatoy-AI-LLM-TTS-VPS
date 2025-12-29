@@ -7,7 +7,7 @@ from typing import Optional
 
 import google.generativeai as genai
 
-from totoyai.models import Intent
+from sagatoyai.models import Intent
 
 logger = logging.getLogger(__name__)
 

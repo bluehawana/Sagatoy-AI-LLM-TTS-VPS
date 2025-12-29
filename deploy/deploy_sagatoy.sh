@@ -3,7 +3,7 @@
 ################################################################################
 # SagaToy Quick Deploy Script
 #
-# This script deploys the ToToyAI application to your VPS
+# This script deploys the Sagatoyai application to your VPS
 #
 # Prerequisites:
 # - VPS setup script already run (vps_setup_sagatoy.sh)
@@ -60,7 +60,7 @@ print_header "Phase 1: Check Prerequisites"
 
 # Check if running from app directory
 if [ ! -f "backend/pyproject.toml" ]; then
-    print_error "Please run this script from the ToToyAI root directory"
+    print_error "Please run this script from the Sagatoyai root directory"
     exit 1
 fi
 

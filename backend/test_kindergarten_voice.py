@@ -3,7 +3,7 @@
 import asyncio
 from pathlib import Path
 from dotenv import load_dotenv
-from totoyai.services.tts import tts_service
+from sagatoyai.services.tts import tts_service
 
 # Load environment variables
 load_dotenv(Path(__file__).parent / ".env")

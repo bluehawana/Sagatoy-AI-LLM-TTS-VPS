@@ -162,7 +162,7 @@ async def stream_response(query):
 
 ---
 
-## 🎯 Applicable Ideas for ToToyAI
+## 🎯 Applicable Ideas for Sagatoyai
 
 ### Idea 1: Streaming TTS
 
@@ -219,9 +219,9 @@ XiaoGPT can play music - we could add:
 
 ---
 
-## ⚖️ Key Differences: XiaoGPT vs ToToyAI
+## ⚖️ Key Differences: XiaoGPT vs Sagatoyai
 
-| Aspect         | XiaoGPT                 | ToToyAI           |
+| Aspect         | XiaoGPT                 | Sagatoyai           |
 | -------------- | ----------------------- | ----------------- |
 | **Hardware**   | Existing XiaoAI speaker | Custom ESP32-S3   |
 | **Approach**   | Software hack           | Clean build       |
@@ -277,7 +277,7 @@ async def ask_with_fallback(query):
 
 ---
 
-## 📋 Action Items for ToToyAI
+## 📋 Action Items for Sagatoyai
 
 ### Immediate (This Week):
 
@@ -347,7 +347,7 @@ XiaoGPT proves that:
 ## 🚀 Next Steps
 
 1. **Study XiaoGPT code** for architecture patterns
-2. **Add streaming TTS** to ToToyAI backend
+2. **Add streaming TTS** to Sagatoyai backend
 3. **Implement conversation context**
 4. **Consider reaching out to Yihong** - Potential advisor/connection?
 
@@ -362,7 +362,7 @@ Yihong is active on:
 
 Could be valuable to:
 
-- Share ToToyAI project
+- Share Sagatoyai project
 - Get feedback on architecture
 - Learn from his experience
 - Potential advisor for Chinese market expansion?

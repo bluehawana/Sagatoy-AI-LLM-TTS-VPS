@@ -1,6 +1,6 @@
 # SagaToy VPS Deployment Guide
 
-Complete guide to deploy ToToyAI FastAPI backend to your VPS at sagatoy.com
+Complete guide to deploy Sagatoyai FastAPI backend to your VPS at sagatoy.com
 
 ## 📋 Prerequisites
 
@@ -58,12 +58,12 @@ nslookup sagatoy.com
 
 ```bash
 cd /var/www/sagatoy
-git clone https://github.com/bluehawana/ToToyAI-LLM-TTS-VPS.git .
+git clone https://github.com/bluehawana/Sagatoyai-LLM-TTS-VPS.git .
 
 # Or if you prefer to keep it separate:
-git clone https://github.com/bluehawana/ToToyAI-LLM-TTS-VPS.git
-mv ToToyAI-LLM-TTS-VPS/* .
-rm -rf ToToyAI-LLM-TTS-VPS
+git clone https://github.com/bluehawana/Sagatoyai-LLM-TTS-VPS.git
+mv Sagatoyai-LLM-TTS-VPS/* .
+rm -rf Sagatoyai-LLM-TTS-VPS
 ```
 
 ### Step 4: Set Up Python Environment
@@ -165,7 +165,7 @@ Create `/var/www/sagatoy/.env` with:
 
 ```bash
 # Application Settings
-APP_NAME=ToToyAI
+APP_NAME=Sagatoyai
 APP_ENV=production
 DEBUG=false
 LOG_LEVEL=info
@@ -468,7 +468,7 @@ sudo systemctl restart sagatoy
 
 ## 🎉 Success!
 
-Once all steps are complete, your ToToyAI backend will be:
+Once all steps are complete, your Sagatoyai backend will be:
 
 ✅ **Running**: https://sagatoy.com/health
 ✅ **Documented**: https://sagatoy.com/docs

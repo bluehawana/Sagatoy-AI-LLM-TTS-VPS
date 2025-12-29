@@ -2,7 +2,7 @@
 
 ## Overview
 
-This guide explains how to use FoloToy Octopus hardware with ToToyAI backend.
+This guide explains how to use FoloToy Octopus hardware with Sagatoyai backend.
 
 ---
 
@@ -23,7 +23,7 @@ This guide explains how to use FoloToy Octopus hardware with ToToyAI backend.
 
 ---
 
-## 🏗️ Architecture: FoloToy + ToToyAI
+## 🏗️ Architecture: FoloToy + Sagatoyai
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -31,7 +31,7 @@ This guide explains how to use FoloToy Octopus hardware with ToToyAI backend.
 ├─────────────────────────────────────────────────────────────┤
 │                                                              │
 │  ┌──────────────┐    ┌──────────────┐    ┌──────────────┐  │
-│  │   Mosquitto  │    │   FoloToy    │    │   ToToyAI    │  │
+│  │   Mosquitto  │    │   FoloToy    │    │   Sagatoyai    │  │
 │  │   MQTT       │◄──▶│   Protocol   │◄──▶│   Backend    │  │
 │  │   Broker     │    │   Handler    │    │   (FastAPI)  │  │
 │  └──────────────┘    └──────────────┘    └──────────────┘  │
@@ -139,7 +139,7 @@ def on_message(client, userdata, msg):
     payload = json.loads(msg.payload)
     audio_data = base64.b64decode(payload["data"])
 
-    # Process with ToToyAI
+    # Process with Sagatoyai
     # 1. STT: Audio → Text
     text = stt.transcribe(audio_data)
 
@@ -300,7 +300,7 @@ void loop() {
 2. [ ] Read their code to understand protocol
 3. [ ] Set up local MQTT broker for testing
 4. [ ] Capture traffic from Octopus
-5. [ ] Implement ToToyAI MQTT handler
+5. [ ] Implement Sagatoyai MQTT handler
 6. [ ] Test end-to-end
 
 Let's start! 🚀

@@ -1,4 +1,4 @@
-# 🛒 ToToyAI Hardware - Complete Shopping List
+# 🛒 Sagatoyai Hardware - Complete Shopping List
 
 ## 🎯 MVP Strategy: Use FoloToy Octopus First!
 

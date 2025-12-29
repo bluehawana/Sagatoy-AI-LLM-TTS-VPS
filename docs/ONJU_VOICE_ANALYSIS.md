@@ -1,4 +1,4 @@
-# 🔍 Onju Voice Analysis & ToToyAI Advanced Solution
+# 🔍 Onju Voice Analysis & Sagatoyai Advanced Solution
 
 ## 📊 Onju Voice Project Overview
 
@@ -31,7 +31,7 @@ Architecture:
    Audio I/O         STT/TTS/LLM          Chat Rooms
 ```
 
-**Interesting Insights for ToToyAI:**
+**Interesting Insights for Sagatoyai:**
 
 - Shows how to integrate voice hardware with chat protocols
 - Demonstrates STT/TTS pipeline architecture
@@ -39,7 +39,7 @@ Architecture:
 - Could inspire family chat features (parents can message toy)
 - Matrix is decentralized/private (good for children's privacy)
 
-**Potential ToToyAI Integration:**
+**Potential Sagatoyai Integration:**
 
 - Parent-to-toy messaging via Matrix
 - Family group conversations
@@ -65,9 +65,9 @@ Architecture:
 
 ---
 
-## 🔗 Maubot vs ToToyAI Backend Comparison
+## 🔗 Maubot vs Sagatoyai Backend Comparison
 
-| Aspect          | Onju Maubot            | ToToyAI Backend               |
+| Aspect          | Onju Maubot            | Sagatoyai Backend               |
 | --------------- | ---------------------- | ----------------------------- |
 | **Protocol**    | Matrix (decentralized) | REST API + WebSocket          |
 | **LLM**         | Single provider        | Multi-LLM (Groq, Gemini)      |
@@ -84,7 +84,7 @@ Architecture:
 3. **Multi-room Support** - Inspiration for multi-toy households
 4. **Async Processing** - Good patterns for voice pipeline
 
-**What ToToyAI Does Better:**
+**What Sagatoyai Does Better:**
 
 1. **Child-Optimized Voices** - Kindergarten-friendly Swedish voices
 2. **Multi-LLM Flexibility** - Switch between Groq/Gemini based on needs
@@ -94,7 +94,7 @@ Architecture:
 
 ---
 
-## 🎯 ToToyAI Advanced Solution - Beyond Onju Voice
+## 🎯 Sagatoyai Advanced Solution - Beyond Onju Voice
 
 ### Our Key Advantages:
 
@@ -102,7 +102,7 @@ Architecture:
 
 ```
 Onju Voice:  Button Press → Listen → Process
-ToToyAI:     Always Listening → Wake Word → Process
+Sagatoyai:     Always Listening → Wake Word → Process
 
 Our Approach:
 - Continuous low-power listening
@@ -115,7 +115,7 @@ Our Approach:
 
 ```
 Onju Voice:  Adult voice assistant
-ToToyAI:     Child-friendly toy (ages 3-10)
+Sagatoyai:     Child-friendly toy (ages 3-10)
 
 Our Features:
 - Kindergarten-optimized voices
@@ -128,7 +128,7 @@ Our Features:
 
 ```
 Onju Voice:  Limited to Google Home shell
-ToToyAI:     Any plush toy design
+Sagatoyai:     Any plush toy design
 
 Our Flexibility:
 - Teddy bear, rabbit, dolphin, etc.
@@ -139,7 +139,7 @@ Our Flexibility:
 
 ---
 
-## 🚀 ToToyAI Advanced Hardware Architecture
+## 🚀 Sagatoyai Advanced Hardware Architecture
 
 ### Dual-Microcontroller Design (RECOMMENDED)
 
@@ -178,7 +178,7 @@ Why Separate?
 
 ```
 ┌─────────────────────────────────────────┐
-│         ToToyAI Motherboard             │
+│         Sagatoyai Motherboard             │
 ├─────────────────────────────────────────┤
 │                                         │
 │  ┌──────────────┐    ┌──────────────┐  │
@@ -268,7 +268,7 @@ Onju Voice (Button-based):
 - Active: ~300mA
 - Battery life: ~6-8 hours
 
-ToToyAI (Wake Word):
+Sagatoyai (Wake Word):
 - Deep sleep: ~10mA (only VAD)
 - Wake word: ~30mA (VAD + detection)
 - Active: ~300mA (full processing)
@@ -546,7 +546,7 @@ Parent dashboard access
 ❌ Not child-friendly
 ```
 
-### ToToyAI Flexibility:
+### Sagatoyai Flexibility:
 
 ```
 ✅ Any plush toy design
@@ -619,7 +619,7 @@ Assembly: DIY
 Total: ~$65 + your time
 ```
 
-### ToToyAI (Our Solution):
+### Sagatoyai (Our Solution):
 
 ```
 Custom PCB + Components: $30
@@ -644,7 +644,7 @@ Margin: 50-60%
 ❌ DIY project only
 ```
 
-### ToToyAI:
+### Sagatoyai:
 
 ```
 ✅ Complete custom design
@@ -659,7 +659,7 @@ Margin: 50-60%
 
 ## 📊 Feature Comparison Table
 
-| Feature              | Onju Voice | FoloToys   | ToToyAI     |
+| Feature              | Onju Voice | FoloToys   | Sagatoyai     |
 | -------------------- | ---------- | ---------- | ----------- |
 | **Wake Word**        | ❌ Button  | ⚠️ Limited | ✅ Advanced |
 | **Always Listening** | ❌ No      | ⚠️ Basic   | ✅ Yes      |
@@ -791,7 +791,7 @@ Margin: 50-60%
 
 ## 🎉 Conclusion
 
-**ToToyAI > Onju Voice + FoloToys**
+**Sagatoyai > Onju Voice + FoloToys**
 
 We're building:
 

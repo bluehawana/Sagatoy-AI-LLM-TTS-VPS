@@ -1,4 +1,4 @@
-# Comparison: ToToyAI vs FoloToys
+# Comparison: Sagatoyai vs FoloToys
 
 ## What We Have ✅
 

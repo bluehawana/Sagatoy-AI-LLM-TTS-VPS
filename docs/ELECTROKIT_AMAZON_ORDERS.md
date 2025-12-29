@@ -309,4 +309,4 @@ This investment gives you a complete professional hardware development setup! �
 
 ---
 
-Ready to order? Let's build ToToyAI! 🧸
+Ready to order? Let's build Sagatoyai! 🧸

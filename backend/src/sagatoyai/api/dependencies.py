@@ -3,7 +3,7 @@
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
-from totoyai.services.auth import TokenData, verify_token
+from sagatoyai.services.auth import TokenData, verify_token
 
 security = HTTPBearer()
 

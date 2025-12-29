@@ -2,11 +2,11 @@
 
 ## Introduction
 
-ToToyAI is an AI-powered plush toy platform designed for the Swedish and EU market. The system embeds AI capabilities into traditional plush toys, enabling natural voice conversations with children. The platform consists of embedded hardware (motherboard, speaker, dual 18650 batteries) inside toys that communicate with self-hosted backend services (LLM and TTS) running on a VPS. The primary language is English, with core features including weather queries, storytelling, singing songs, and educational Q&A (math, general knowledge).
+Sagatoyai is an AI-powered plush toy platform designed for the Swedish and EU market. The system embeds AI capabilities into traditional plush toys, enabling natural voice conversations with children. The platform consists of embedded hardware (motherboard, speaker, dual 18650 batteries) inside toys that communicate with self-hosted backend services (LLM and TTS) running on a VPS. The primary language is English, with core features including weather queries, storytelling, singing songs, and educational Q&A (math, general knowledge).
 
 ## Glossary
 
-- **ToToyAI**: The complete AI toy platform including hardware and software components
+- **Sagatoyai**: The complete AI toy platform including hardware and software components
 - **Toy Device**: The physical plush toy containing embedded electronics (motherboard, microphone, speaker, batteries)
 - **Backend Server**: Self-hosted VPS services handling LLM inference and TTS generation
 - **LLM (Large Language Model)**: AI model that processes user queries and generates conversational responses
@@ -23,11 +23,11 @@ ToToyAI is an AI-powered plush toy platform designed for the Swedish and EU mark
 
 #### Acceptance Criteria
 
-1. WHEN the Toy Device detects the wake word THEN the ToToyAI system SHALL activate listening mode and provide audio feedback within 500 milliseconds
-2. WHEN the Toy Device is in listening mode THEN the ToToyAI system SHALL capture audio input until 2 seconds of silence is detected
-3. WHEN audio input is captured THEN the ToToyAI system SHALL transmit the audio to the Backend Server for STT processing
+1. WHEN the Toy Device detects the wake word THEN the Sagatoyai system SHALL activate listening mode and provide audio feedback within 500 milliseconds
+2. WHEN the Toy Device is in listening mode THEN the Sagatoyai system SHALL capture audio input until 2 seconds of silence is detected
+3. WHEN audio input is captured THEN the Sagatoyai system SHALL transmit the audio to the Backend Server for STT processing
 4. WHEN the STT service receives audio THEN the Backend Server SHALL convert the audio to text with a minimum accuracy of 90% for clear child speech in English
-5. IF the STT service fails to process audio THEN the ToToyAI system SHALL play a friendly error message asking the child to repeat
+5. IF the STT service fails to process audio THEN the Sagatoyai system SHALL play a friendly error message asking the child to repeat
 
 ### Requirement 2: Conversational AI Response
 

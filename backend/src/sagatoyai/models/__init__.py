@@ -1,14 +1,14 @@
 """Pydantic data models."""
 
-from totoyai.models.conversation import (
+from sagatoyai.models.conversation import (
     ConversationRequest,
     ConversationResponse,
     Intent,
     Message,
     SessionContext,
 )
-from totoyai.models.device import Device, DeviceAuth, DeviceTokens
-from totoyai.models.weather import WeatherData
+from sagatoyai.models.device import Device, DeviceAuth, DeviceTokens
+from sagatoyai.models.weather import WeatherData
 
 __all__ = [
     "ConversationRequest",

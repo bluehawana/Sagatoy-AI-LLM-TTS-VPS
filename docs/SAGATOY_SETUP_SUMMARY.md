@@ -2,7 +2,7 @@
 
 ## 🎯 What We're Deploying
 
-**ToToyAI Backend** - FastAPI application for AI-powered plush toys
+**Sagatoyai Backend** - FastAPI application for AI-powered plush toys
 - **Tech Stack**: Python 3.11 + FastAPI + Redis + Nginx
 - **Domain**: sagatoy.com
 - **Services**: STT (Whisper), LLM (Groq/Gemini), TTS (Edge-TTS)
@@ -61,7 +61,7 @@ cp /tmp/.env.example .env
 nano .env
 
 # Clone your repository
-git clone https://github.com/bluehawana/ToToyAI-LLM-TTS-VPS.git .
+git clone https://github.com/bluehawana/Sagatoyai-LLM-TTS-VPS.git .
 
 # Run deployment
 bash deploy_sagatoy.sh
@@ -130,7 +130,7 @@ Wait for DNS propagation to complete.
 ### Step 3: Clone Repository
 ```bash
 cd /var/www/sagatoy
-git clone https://github.com/bluehawana/ToToyAI-LLM-TTS-VPS.git .
+git clone https://github.com/bluehawana/Sagatoyai-LLM-TTS-VPS.git .
 ```
 
 ### Step 4: Configure Environment

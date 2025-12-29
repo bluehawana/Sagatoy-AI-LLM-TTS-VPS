@@ -1,4 +1,4 @@
-# 🚀 ToToyAI MVP Roadmap - Investor Demo Ready
+# 🚀 Sagatoyai MVP Roadmap - Investor Demo Ready
 
 ## 🎯 Goal: Working Demo in 2-3 Weeks
 
@@ -76,7 +76,7 @@ FoloToy uses MQTT protocol. We can:
 │           Hetzner VPS               │
 ├─────────────────────────────────────┤
 │  Docker Compose                     │
-│  ├── ToToyAI Backend (FastAPI)      │
+│  ├── Sagatoyai Backend (FastAPI)      │
 │  ├── MQTT Broker (Mosquitto)        │
 │  ├── Redis (session cache)          │
 │  └── Nginx (reverse proxy + SSL)    │
@@ -123,7 +123,7 @@ FoloToy uses MQTT protocol. We can:
 ### Demo Video (2-3 minutes):
 
 1. **Problem:** Kids need safe, educational AI interaction
-2. **Solution:** ToToyAI - Swedish-first AI toy
+2. **Solution:** Sagatoyai - Swedish-first AI toy
 3. **Demo:** Live interaction with Octopus
 4. **Tech:** Show backend, multi-LLM, Swedish voices
 5. **Market:** Sweden → Nordics → EU
@@ -131,7 +131,7 @@ FoloToy uses MQTT protocol. We can:
 
 ### Pitch Deck (10 slides):
 
-1. Cover - ToToyAI logo
+1. Cover - Sagatoyai logo
 2. Problem - Screen time, unsafe AI
 3. Solution - Safe, educational AI toy
 4. Demo - Video/screenshots
@@ -211,7 +211,7 @@ FoloToy uses MQTT protocol. We can:
 │  + Speaker      │     │  └─────┬─────┘  │     │  │  (LLM)    │  │
 │  + Battery      │     │        │        │     │  └───────────┘  │
 │                 │◀────│  ┌─────▼─────┐  │     │                 │
-└─────────────────┘     │  │  ToToyAI  │──│────▶│  ┌───────────┐  │
+└─────────────────┘     │  │  Sagatoyai  │──│────▶│  ┌───────────┐  │
                         │  │  Backend  │  │     │  │  Azure    │  │
 ┌─────────────────┐     │  │  (FastAPI)│◀─│─────│  │  Speech   │  │
 │  Parent         │     │  └───────────┘  │     │  └───────────┘  │
@@ -261,7 +261,7 @@ FoloToy uses MQTT protocol. We can:
 
 ## 💡 Key Differentiators for Investors
 
-### Why ToToyAI vs Competitors:
+### Why Sagatoyai vs Competitors:
 
 1. **Swedish-First** - No competitor focuses on Swedish market
 2. **Multi-LLM** - Not locked to one AI provider

@@ -1,8 +1,8 @@
 """Script to generate story library using Gemini and save to audio files."""
 
-from totoyai.services.tts import tts_service
-from totoyai.services.story_library import STORY_SERIES, get_story_prompt
-from totoyai.services.gemini import gemini_service
+from sagatoyai.services.tts import tts_service
+from sagatoyai.services.story_library import STORY_SERIES, get_story_prompt
+from sagatoyai.services.gemini import gemini_service
 import asyncio
 import os
 import sys
@@ -106,7 +106,7 @@ async def main():
     import argparse
 
     parser = argparse.ArgumentParser(
-        description="Generate ToToyAI story library")
+        description="Generate Sagatoyai story library")
     parser.add_argument(
         "--language",
         "-l",

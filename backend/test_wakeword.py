@@ -5,8 +5,8 @@ Wake words: "Hej Saga", "Hello Saga", "Hey Saga"
 """
 
 import asyncio
-from totoyai.services.gemini import gemini_service
-from totoyai.services.tts import tts_service
+from sagatoyai.services.gemini import gemini_service
+from sagatoyai.services.tts import tts_service
 
 
 # SagaToy wake words

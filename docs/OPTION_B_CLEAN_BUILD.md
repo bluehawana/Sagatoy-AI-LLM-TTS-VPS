@@ -21,7 +21,7 @@ After legal review, we're building 100% from scratch:
 
 ```
 ┌─────────────────────────────────────┐
-│         ToToyAI Hardware            │
+│         Sagatoyai Hardware            │
 ├─────────────────────────────────────┤
 │  ESP32-S3 DevKit     (Espressif)    │  ← Apache 2.0 license
 │  INMP441 Mic         (Generic)      │  ← No IP issues
@@ -35,11 +35,11 @@ After legal review, we're building 100% from scratch:
 
 ```
 ┌─────────────────────────────────────┐
-│         ToToyAI Software            │
+│         Sagatoyai Software            │
 ├─────────────────────────────────────┤
 │  Firmware: ESP-IDF   (Apache 2.0)   │
 │  Wake Word: Edge Impulse (Our model)│
-│  Backend: ToToyAI    (100% ours)    │
+│  Backend: Sagatoyai    (100% ours)    │
 │  LLM: Groq/Gemini    (API license)  │
 │  TTS: Azure          (API license)  │
 │  STT: Azure          (API license)  │
@@ -160,7 +160,7 @@ After legal review, we're building 100% from scratch:
 ### Backend Integration:
 
 ```
-ESP32-S3                         ToToyAI Backend
+ESP32-S3                         Sagatoyai Backend
     │                                   │
     │  POST /api/v1/conversation        │
     │  {audio: base64, device_id}       │
@@ -210,7 +210,7 @@ totoyai-firmware/
 
 - Go to https://edgeimpulse.com/
 - Sign up (free tier is enough)
-- Create new project: "ToToyAI Wake Word"
+- Create new project: "Sagatoyai Wake Word"
 
 ### Step 2: Collect Data
 
@@ -268,7 +268,7 @@ Record samples:
 | Edge Impulse    | Your model | ✅ Yes        | You own trained model   |
 | INMP441         | Generic    | ✅ Yes        | Standard component      |
 | MAX98357A       | Generic    | ✅ Yes        | Standard component      |
-| ToToyAI Backend | Yours      | ✅ Yes        | 100% your code          |
+| Sagatoyai Backend | Yours      | ✅ Yes        | 100% your code          |
 | Groq API        | API Terms  | ✅ Yes        | Standard API usage      |
 | Azure Speech    | API Terms  | ✅ Yes        | Standard API usage      |
 
@@ -280,7 +280,7 @@ Record samples:
 
 ### The Pitch:
 
-> "We built ToToyAI from the ground up - 100% our own technology.
+> "We built Sagatoyai from the ground up - 100% our own technology.
 >
 > Unlike competitors who've had safety scandals, we designed child safety
 > into our architecture from day one:

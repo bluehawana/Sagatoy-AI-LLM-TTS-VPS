@@ -1,8 +1,8 @@
-# Design Document: ToToyAI Platform
+# Design Document: Sagatoyai Platform
 
 ## Overview
 
-ToToyAI is a complete AI-powered plush toy platform consisting of embedded hardware devices and self-hosted backend services. The system enables natural voice conversations between children and their toys, providing entertainment and educational value through LLM-powered interactions.
+Sagatoyai is a complete AI-powered plush toy platform consisting of embedded hardware devices and self-hosted backend services. The system enables natural voice conversations between children and their toys, providing entertainment and educational value through LLM-powered interactions.
 
 The architecture follows a client-server model where the Toy Device handles audio capture/playback and communicates with a VPS-hosted backend that processes speech, generates responses, and synthesizes audio. The system prioritizes child safety, low latency, and GDPR compliance.
 

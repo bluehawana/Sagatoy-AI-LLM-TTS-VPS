@@ -9,9 +9,9 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import Optional, Callable, Awaitable
 
-from totoyai.models import Intent
-from totoyai.services.groq_service import groq_service, GroqError
-from totoyai.services.gemini import gemini_service, GeminiError
+from sagatoyai.models import Intent
+from sagatoyai.services.groq_service import groq_service, GroqError
+from sagatoyai.services.gemini import gemini_service, GeminiError
 
 logger = logging.getLogger(__name__)
 

@@ -2,8 +2,8 @@
 
 from fastapi import APIRouter, Depends
 
-from totoyai.api.dependencies import get_current_device
-from totoyai.models import (
+from sagatoyai.api.dependencies import get_current_device
+from sagatoyai.models import (
     ConversationRequest,
     ConversationResponse,
     DeviceAuth,
@@ -11,7 +11,7 @@ from totoyai.models import (
     Intent,
     WeatherData,
 )
-from totoyai.services.auth import TokenData, create_access_token, create_refresh_token
+from sagatoyai.services.auth import TokenData, create_access_token, create_refresh_token
 
 router = APIRouter(prefix="/api/v1")
 

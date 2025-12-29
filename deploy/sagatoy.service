@@ -1,5 +1,5 @@
 [Unit]
-Description=SagaToy/ToToyAI FastAPI Backend
+Description=Sagatoyai FastAPI Backend
 After=network.target
 
 [Service]
@@ -13,7 +13,7 @@ Environment="PATH=/var/www/sagatoy/venv/bin"
 EnvironmentFile=-/var/www/sagatoy/backend/.env
 
 # Start command
-ExecStart=/var/www/sagatoy/venv/bin/uvicorn totoyai.main:app \
+ExecStart=/var/www/sagatoy/venv/bin/uvicorn sagatoyai.main:app \
     --host 0.0.0.0 \
     --port 8000 \
     --workers 1 \

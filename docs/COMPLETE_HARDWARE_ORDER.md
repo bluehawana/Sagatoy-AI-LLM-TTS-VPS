@@ -1,4 +1,4 @@
-# 🛒 Complete Hardware & Tools Order - ToToyAI
+# 🛒 Complete Hardware & Tools Order - Sagatoyai
 
 ## Investment for the Future
 
@@ -397,7 +397,7 @@ Before ordering, verify:
    - Edge Impulse tutorials
 
 4. **Prepare Backend:**
-   - Test ToToyAI backend locally
+   - Test Sagatoyai backend locally
    - Add WebSocket endpoint for audio streaming
 
 ---
