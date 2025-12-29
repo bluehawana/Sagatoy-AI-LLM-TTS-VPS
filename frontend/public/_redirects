@@ -1,2 +1,3 @@
 # Redirect info subdomain to /info page
-https://info.sagatoy.com/* https://info.sagatoy.com/info/:splat 301!
+https://info.sagatoy.com/ /info 301
+https://www.info.sagatoy.com/ /info 301
