@@ -1,0 +1,19 @@
+QUICK 2-MINUTE SETUP:
+
+1. DNS RECORDS (Add in Cloudflare Dashboard → sagatoy.com → DNS):
+   
+   Record 1: TXT | @ | v=spf1 a mx include:relay.mailchannels.net ~all
+   Record 2: TXT | mailchannels._domainkey | v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDPtW5iwpXVPiH5FzJ7Nrl8USzuY9zqqzjE0D1r04xDN6qwziDnmgcFNNfMewVKN2D1O+2J9N73h7mU8JAXq3o+7KLCdPiKvWBb0FJJhJLO2BhqYxLvLJQ/
+   Record 3: TXT | _mailchannels | v=mc1 cfid=sagatoy.pages.dev
+
+2. BIND KV (Dashboard → Workers & Pages → sagatoy → Settings → Functions):
+   
+   Variable: WAITLIST_KV
+   Namespace: WAITLIST_KV (ID: fed53664b2c041cd9caf42c60f7d7e6e)
+   Environment: Production
+
+3. TEST:
+   
+   Go to www.sagatoy.com → Fill form → Check info@sagatoy.com!
+
+Done! 🚀

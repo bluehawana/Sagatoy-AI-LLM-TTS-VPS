@@ -57,7 +57,7 @@ export default function Page() {
       const formData = new FormData();
       formData.append('email', email);
 
-      const response = await fetch('/api/subscribe', {
+      const response = await fetch('/api/notify', {
         method: 'POST',
         body: formData,
       });
@@ -66,7 +66,7 @@ export default function Page() {
 
       if (response.ok) {
         setStatus('success');
-        setMessage('Thank you! We\'ll notify you when we launch.');
+        setMessage(data.message || 'Thank you! Check your inbox for a welcome email.');
         setEmail('');
       } else {
         setStatus('error');
