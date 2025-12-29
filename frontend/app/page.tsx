@@ -13,7 +13,7 @@ export default function Page() {
       </div>
 
       {/* Header */}
-      <header className="mx-auto flex w-full max-w-7xl items-center justify-center px-6 py-8 lg:px-8">
+      <header className="mx-auto flex w-full max-w-7xl items-center justify-between px-6 py-8 lg:px-8">
         <div className="flex items-center">
           <Image
             src="/sagatoy_newlogo_ps.png"
@@ -24,6 +24,17 @@ export default function Page() {
             priority
             unoptimized
           />
+        </div>
+
+        {/* Right side - CTA Button */}
+        <div className="flex items-center gap-6">
+          <a
+            href="#waitlist"
+            className="hidden sm:inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-saga-purple to-saga-sky px-6 py-2.5 text-sm font-semibold text-white shadow-lg transition hover:scale-105 hover:shadow-xl"
+          >
+            <Mail className="h-4 w-4" />
+            Join Waitlist
+          </a>
         </div>
       </header>
 
@@ -81,7 +92,7 @@ export default function Page() {
             </div>
 
             {/* Email Signup */}
-            <div className="space-y-3">
+            <div id="waitlist" className="space-y-3 scroll-mt-20">
               <p className="text-sm font-medium text-slate-700">Join the waitlist:</p>
               <form className="flex max-w-lg gap-3">
                 <input
@@ -141,17 +152,17 @@ export default function Page() {
       {/* Footer - Simple */}
       <footer className="border-t border-slate-200 mt-16 bg-transparent">
         <div className="mx-auto max-w-7xl px-6 py-8 lg:px-8">
-          <div className="flex flex-col items-center gap-6">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
             <Image
               src="/sagatoy_newlogo_ps.png"
               alt="Sagatoy"
               width={1536}
               height={1536}
-              className="h-24 w-24"
+              className="h-20 w-20"
               unoptimized
             />
 
-            <div className="text-center text-sm text-slate-500">
+            <div className="text-center sm:text-right text-sm text-slate-500">
               <p>© {new Date().getFullYear()} Sagatoy. Born in Gothenburg, Sweden 🇸🇪</p>
             </div>
           </div>
