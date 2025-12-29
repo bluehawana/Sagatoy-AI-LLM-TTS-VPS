@@ -1,6 +1,9 @@
+'use client';
+
 import { ArrowRight, Sparkles, Globe2, Mic, Shield, Languages, Mail, Heart, BookOpen, Users } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
 const highlights = [
   {
@@ -42,6 +45,39 @@ const highlights = [
 ];
 
 export default function Page() {
+  const [email, setEmail] = useState('');
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [message, setMessage] = useState('');
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus('loading');
+
+    try {
+      const formData = new FormData();
+      formData.append('email', email);
+
+      const response = await fetch('/api/subscribe', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setStatus('success');
+        setMessage('Thank you! We\'ll notify you when we launch.');
+        setEmail('');
+      } else {
+        setStatus('error');
+        setMessage(data.error || 'Something went wrong. Please try again.');
+      }
+    } catch (error) {
+      setStatus('error');
+      setMessage('Failed to submit. Please try again.');
+    }
+  };
+
   return (
     <main className="relative isolate min-h-screen overflow-hidden bg-gradient-to-b from-slate-50 via-white to-slate-50">
       {/* Animated background */}
@@ -171,20 +207,30 @@ export default function Page() {
             {/* Email Signup */}
             <div id="notify" className="space-y-3 scroll-mt-20">
               <p className="text-sm font-medium text-slate-700">Get notified when we launch:</p>
-              <form className="flex max-w-md gap-3">
+              <form onSubmit={handleSubmit} className="flex max-w-md gap-3">
                 <input
                   type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   placeholder="your@email.com"
-                  className="flex-1 rounded-full border-2 border-slate-200 bg-white px-5 py-3 text-sm transition focus:border-saga-purple focus:outline-none"
+                  required
+                  disabled={status === 'loading'}
+                  className="flex-1 rounded-full border-2 border-slate-200 bg-white px-5 py-3 text-sm transition focus:border-saga-purple focus:outline-none disabled:opacity-50"
                 />
                 <button
                   type="submit"
-                  className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-saga-purple to-saga-sky px-6 py-3 font-semibold text-white shadow-lg transition hover:scale-105 hover:shadow-xl"
+                  disabled={status === 'loading'}
+                  className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-saga-purple to-saga-sky px-6 py-3 font-semibold text-white shadow-lg transition hover:scale-105 hover:shadow-xl disabled:opacity-50 disabled:hover:scale-100"
                 >
                   <Mail className="h-4 w-4" />
-                  Notify Me
+                  {status === 'loading' ? 'Sending...' : 'Notify Me'}
                 </button>
               </form>
+              {message && (
+                <p className={`text-sm ${status === 'success' ? 'text-green-600' : 'text-red-600'}`}>
+                  {message}
+                </p>
+              )}
               <p className="text-xs text-slate-500">
                 We respect your privacy. Unsubscribe at any time.
               </p>
