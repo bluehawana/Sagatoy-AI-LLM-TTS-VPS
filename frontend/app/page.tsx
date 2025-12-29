@@ -58,9 +58,9 @@ export default function Page() {
           <Image
             src="/newlogoo.png"
             alt="Sagatoy - Born in Gothenburg, Sweden"
-            width={200}
-            height={63}
-            className="h-16 w-auto"
+            width={400}
+            height={126}
+            className="h-32 w-auto"
             priority
           />
         </div>
@@ -305,9 +305,9 @@ export default function Page() {
               <Image
                 src="/newlogoo.png"
                 alt="Sagatoy - Born in Gothenburg, Sweden"
-                width={180}
-                height={57}
-                className="h-12 w-auto"
+                width={300}
+                height={95}
+                className="h-24 w-auto"
               />
             </div>
 
