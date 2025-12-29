@@ -56,11 +56,11 @@ export async function onRequestPost(context: any) {
       }
     });
 
-  } catch (error) {
+  } catch (error: any) {
     console.error('Subscription error:', error);
     return new Response(JSON.stringify({
       error: 'Failed to process subscription',
-      message: error.message
+      message: error?.message || 'Unknown error'
     }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' }
