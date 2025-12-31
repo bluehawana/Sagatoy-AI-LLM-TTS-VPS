@@ -1,3 +1,7 @@
 name = "sagatoy"
 compatibility_date = "2024-01-01"
 pages_build_output_dir = "out"
+
+[[kv_namespaces]]
+binding = "WAITLIST_KV"
+id = "fed53664b2c041cd9caf42c60f7d7e6e"

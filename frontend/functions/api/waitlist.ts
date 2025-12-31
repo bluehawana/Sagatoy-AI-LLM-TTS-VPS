@@ -71,7 +71,7 @@ export async function onRequestPost(context: any) {
 
     // Send admin notification to info@sagatoy.com
     try {
-      await fetch('https://api.mailchannels.net/tx/v1/send', {
+      const emailResponse = await fetch('https://api.mailchannels.net/tx/v1/send', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -128,9 +128,15 @@ export async function onRequestPost(context: any) {
           }]
         }),
       });
-      console.log('✅ Admin notification sent');
+
+      if (!emailResponse.ok) {
+        const errorText = await emailResponse.text();
+        console.error('❌ MailChannels error:', emailResponse.status, errorText);
+      } else {
+        console.log('✅ Admin notification sent successfully');
+      }
     } catch (error: any) {
-      console.error('Email failed:', error);
+      console.error('❌ Email failed:', error);
     }
 
     return new Response(JSON.stringify({

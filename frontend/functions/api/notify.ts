@@ -50,7 +50,7 @@ export async function onRequestPost(context: any) {
 
     // Send welcome email FROM info@sagatoy.com TO customer
     try {
-      await fetch('https://api.mailchannels.net/tx/v1/send', {
+      const emailResponse = await fetch('https://api.mailchannels.net/tx/v1/send', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -150,9 +150,15 @@ export async function onRequestPost(context: any) {
           }]
         }),
       });
-      console.log('✅ Welcome email sent to customer');
+
+      if (!emailResponse.ok) {
+        const errorText = await emailResponse.text();
+        console.error('❌ MailChannels error (notify):', emailResponse.status, errorText);
+      } else {
+        console.log('✅ Welcome email sent to customer successfully');
+      }
     } catch (error: any) {
-      console.error('Email sending failed:', error);
+      console.error('❌ Email sending failed (notify):', error);
       // Don't fail the request - storage is more important
     }
 
