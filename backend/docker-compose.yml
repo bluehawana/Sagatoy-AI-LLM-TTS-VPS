@@ -6,11 +6,24 @@ services:
     environment:
       - REDIS_URL=redis://redis:6379
       - OLLAMA_URL=http://ollama:11434
+      - MQTT_BROKER=mqtt
+      - MQTT_PORT=1883
     depends_on:
       - redis
       - ollama
+      - mqtt
     volumes:
       - ./src:/app/src
+    restart: unless-stopped
+
+  mqtt:
+    image: eclipse-mosquitto:2
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - mosquitto_data:/mosquitto
+      - ./mosquitto.conf:/mosquitto/config/mosquitto.conf
     restart: unless-stopped
 
   redis:
@@ -32,3 +45,4 @@ services:
 volumes:
   redis_data:
   ollama_data:
+  mosquitto_data:

@@ -1,0 +1,93 @@
+# SagaToy Pi Configuration
+# Copy to config.local.yaml and fill in secrets — never commit secrets.
+
+device:
+  id: "sagatoy-001"          # Unique per device
+  name: "Saga"               # Toy's name (used in responses)
+  child_name: ""             # Set via QR parent page
+  child_age: 5
+  preferred_language: "sv"   # sv | da | no | fi | en | zh
+
+gpio:
+  button_pin: 17             # Right-hand ON/OFF button (active LOW, pull-up)
+  vibration_pin: 18          # Vibration motor via 2N2222 transistor
+  vibrate_on_press_ms: 300   # Vibration duration on button press (ms)
+  vibrate_on_done_ms: 500    # Vibration duration when response is ready (ms)
+
+audio:
+  input_device: null         # null = auto-detect USB mic
+  sample_rate: 16000
+  channels: 1
+  chunk_size: 1024
+  silence_threshold: 500     # RMS threshold to detect end of speech
+  silence_duration_s: 1.5    # Seconds of silence before stopping recording
+  max_record_s: 30           # Hard limit on recording duration
+
+stt:
+  # Primary: whisper.cpp local (fast on Pi 4)
+  engine: "whisper_cpp"      # whisper_cpp | openai_api
+  model_path: "/home/pi/sagatoy/models/ggml-medium.bin"
+  language: "auto"           # auto-detect
+
+llm:
+  # WiFi-available: z.ai GLM-4 Flash (fast, good multilingual)
+  cloud_provider: "zai"
+  cloud_model: "glm-4-flash"
+  cloud_base_url: "https://open.bigmodel.cn/api/paas/v4/"
+  cloud_api_key: ""          # Set in config.local.yaml
+
+  # Offline fallback: Ollama + phi3:mini on Pi 4
+  offline_provider: "ollama"
+  offline_model: "phi3:mini"
+  offline_url: "http://localhost:11434"
+
+  system_prompt: |
+    You are {toy_name}, a friendly AI toy talking to {child_name}, a {child_age}-year-old child.
+    Speak in {language}. Keep replies SHORT — 2-3 sentences maximum.
+    Use simple, warm, playful language. Never use scary or complex topics.
+    If the child asks for a story or song, respond with: PLAY_LOCAL:<type>
+
+tts:
+  # Piper for: sv, da, no, fi, en
+  # edge-tts for: zh (and fallback for all)
+  engine: "piper"            # piper | edge
+  voices:
+    sv: "/home/pi/sagatoy/voices/sv_SE-nst-medium.onnx"
+    da: "/home/pi/sagatoy/voices/da_DK-talesyntese-medium.onnx"
+    no: "/home/pi/sagatoy/voices/nb_NO-talesyntese-medium.onnx"
+    fi: "/home/pi/sagatoy/voices/fi_FI-harri-medium.onnx"
+    en: "/home/pi/sagatoy/voices/en_GB-alba-medium.onnx"
+    zh: "edge"               # Use edge-tts for Chinese
+  edge_voices:
+    zh: "zh-CN-XiaoxiaoNeural"
+    sv: "sv-SE-SofieNeural"
+    da: "da-DK-ChristelNeural"
+    no: "nb-NO-PernilleNeural"
+    fi: "fi-FI-NooraNeural"
+    en: "en-GB-SoniaNeural"
+  speech_rate: "-10%"        # Slightly slower for children
+
+content:
+  base_path: "/home/pi/sagatoy/content"
+  story_triggers:
+    sv: ["berätta en saga", "berätta en historia", "en saga", "saga"]
+    da: ["fortæl en historie", "en historie", "fortæl"]
+    no: ["fortell en historie", "en historie", "fortell"]
+    fi: ["kerro tarina", "tarina", "kerro satu"]
+    en: ["tell me a story", "tell a story", "a story please"]
+    zh: ["讲故事", "故事", "讲个故事"]
+  song_triggers:
+    sv: ["sjung", "sjung en sång", "en sång"]
+    da: ["syng", "en sang"]
+    no: ["syng", "en sang"]
+    fi: ["laula", "laulu"]
+    en: ["sing", "sing a song", "a song"]
+    zh: ["唱歌", "歌"]
+
+wifi:
+  check_url: "https://open.bigmodel.cn"
+  check_timeout_s: 3
+
+parent_pairing:
+  base_url: "https://sagatoy.se/setup"   # VPS endpoint
+  pull_on_boot: true

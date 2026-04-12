@@ -1,0 +1,40 @@
+[Unit]
+Description=Sagatoyai Next.js Frontend
+After=network.target
+
+[Service]
+Type=simple
+User=harvard
+Group=harvard
+WorkingDirectory=/var/www/sagatoy/frontend
+
+# Environment variables
+Environment="PATH=/var/www/sagatoy/frontend/node_modules/.bin:/usr/local/bin:/usr/bin:/bin"
+Environment="NODE_ENV=production"
+Environment="PORT=3000"
+
+# Start command
+ExecStart=/usr/bin/npm start
+
+# Restart policy
+Restart=always
+RestartSec=10
+
+# Security settings
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/www/sagatoy/frontend
+
+# Resource limits
+LimitNOFILE=65536
+LimitNPROC=4096
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=sagatoy-frontend
+
+[Install]
+WantedBy=multi-user.target
