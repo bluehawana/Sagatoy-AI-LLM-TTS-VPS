@@ -5,12 +5,10 @@ services:
       - "8000:8000"
     environment:
       - REDIS_URL=redis://redis:6379
-      - OLLAMA_URL=http://ollama:11434
       - MQTT_BROKER=mqtt
       - MQTT_PORT=1883
     depends_on:
       - redis
-      - ollama
       - mqtt
     volumes:
       - ./src:/app/src
@@ -34,15 +32,6 @@ services:
       - redis_data:/data
     restart: unless-stopped
 
-  ollama:
-    image: ollama/ollama:latest
-    ports:
-      - "11434:11434"
-    volumes:
-      - ollama_data:/root/.ollama
-    restart: unless-stopped
-
 volumes:
   redis_data:
-  ollama_data:
   mosquitto_data:
