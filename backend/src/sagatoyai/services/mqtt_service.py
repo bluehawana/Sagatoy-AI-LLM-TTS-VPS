@@ -203,18 +203,24 @@ class FoloToyHandler:
                 language = "sv"
 
             logger.info(f"Received text from {device_id}: {text}")
+            print(f"[DEBUG] Processing text: {text}, lang: {language}")
 
-            response = await self.llm.generate(
+            response, _ = await self.llm.generate_conversation_response(
                 text,
-                session_id=device_id,
                 language=language,
             )
+            print(f"[DEBUG] LLM response: {response[:100]}...")
 
             audio_response = await self.tts.synthesize_to_bytes(response, language=language)
+            print(f"[DEBUG] TTS audio generated: {len(audio_response)} bytes")
 
             await self.mqtt.publish_tts_audio(device_id, audio_response)
+            print(f"[DEBUG] Published TTS audio to {device_id}")
 
         except Exception as e:
+            print(f"[ERROR] Error handling text: {e}")
+            import traceback
+            traceback.print_exc()
             logger.error(f"Error handling text: {e}")
 
     async def handle_event(self, topic: str, payload: bytes):

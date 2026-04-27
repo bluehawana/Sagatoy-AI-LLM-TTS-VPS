@@ -2,6 +2,8 @@
 
 import logging
 import os
+import re
+from datetime import datetime
 from typing import Optional, Tuple
 
 from groq import Groq
@@ -27,8 +29,8 @@ class GroqService:
         else:
             self.client = Groq(api_key=self.api_key)
 
-        # Default model - fastest and most capable
-        self.model = "llama-3.3-70b-versatile"
+        # Use fastest model for real-time toy responses
+        self.model = "llama-3.1-8b-instant"  # Much faster than 70b
 
     def _detect_intent(self, user_input: str) -> Intent:
         """Detect user intent from input."""
@@ -54,6 +56,71 @@ class GroqService:
             return Intent.MATH
         return Intent.GENERAL
 
+    def _handle_math_directly(self, user_input: str, language: str = "en") -> Optional[str]:
+        """Handle simple math questions directly without LLM. MVP: English only."""
+        user_lower = user_input.lower()
+        
+        # Math keywords (English + common Swedish)
+        math_keywords = ["plus", "minus", "times", "multiplied", "divided", "equals", "what is", "calculate", "gånger", "delat"]
+        
+        if not any(k in user_lower for k in math_keywords):
+            return None
+            
+        # Patterns for math
+        patterns = [
+            r'(\d+)\s*(?:plus|\+|times|\*)\s*(\d+)',
+            r'(\d+)\s*(?:minus|-)\s*(\d+)',
+            r'(\d+)\s*(?:/|divided by)\s*(\d+)',
+            r'what is\s*(\d+)\s*(?:plus|times|minus|divided)\s*(\d+)',
+        ]
+        
+        for pattern in patterns:
+            match = re.search(pattern, user_lower)
+            if match:
+                a, b = int(match.group(1)), int(match.group(2))
+                
+                if "+" in user_lower or "plus" in user_lower:
+                    result = a + b
+                    op = "plus"
+                elif "minus" in user_lower or "-" in user_lower:
+                    result = a - b
+                    op = "minus"
+                elif any(x in user_lower for x in ["times", "*"]):
+                    result = a * b
+                    op = "times"
+                else:
+                    result = round(a / b, 2) if b != 0 else 0
+                    op = "divided by"
+                
+                # MVP: English only
+                return f"It's {result}! {a} {op} {b} equals {result}. Great job!"
+        
+        return None
+
+    def _handle_date_day_directly(self, user_input: str, language: str = "en") -> Optional[str]:
+        """Handle date and day questions directly without LLM. MVP: English only."""
+        user_lower = user_input.lower()
+        
+        # Day keywords
+        day_keywords = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday", "day", "dag"]
+        date_keywords = ["what date", "date today", "today", "day is it", "vilken"]
+        
+        now = datetime.now()
+        
+        if any(d in user_lower for d in day_keywords):
+            day_name_en = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+            day_num = now.weekday()
+            return f"Today is {day_name_en[day_num]}! Can you say it with me?"
+        
+        if any(d in user_lower for d in date_keywords):
+            return f"Today is {now.strftime('%B %d, %Y')}!"
+        
+        return None
+
+    def _handle_weather_directly(self, user_input: str, language: str = "en") -> Optional[str]:
+        """Quick weather response - uses LLM but optimized."""
+        return None  # Keep using LLM for weather for now (more complex)
+    
     async def generate_response(
         self,
         prompt: str,
@@ -109,14 +176,24 @@ class GroqService:
             Tuple of (response_text, detected_intent)
         """
         intent = self._detect_intent(user_input)
+        
+        # MVP: Default to English for fastest response (skip translation)
+        language = "en"
+        
+        # Fast path: handle math directly (no LLM call!)
+        if intent == Intent.MATH:
+            math_response = self._handle_math_directly(user_input, language)
+            if math_response:
+                return math_response, intent
+        
+        # Fast path: handle date/day directly (no LLM call!)
+        if any(word in user_input.lower() for word in ["day", "datum", "dag", "date", "vilken"]):
+            date_response = self._handle_date_day_directly(user_input, language)
+            if date_response:
+                return date_response, intent
 
-        if language == "sv":
-            system_instruction = """Du är en vänlig AI-assistent i en gosig leksak som pratar med barn 3-10 år.
-Använd enkelt, varmt och uppmuntrande språk. Håll svaren korta (2-3 meningar).
-Var lekfull och fantasifull. Använd aldrig komplicerade ord eller läskiga ämnen.
-Svara alltid på svenska."""
-        else:
-            system_instruction = """You are a friendly AI assistant inside a plush toy, talking to children aged 3-10.
+        # MVP: English only for fastest response
+        system_instruction = """You are a friendly AI assistant inside a plush toy, talking to children aged 3-10.
 Use simple, warm, and encouraging language. Keep responses short (2-3 sentences).
 Be playful and imaginative. Never use complex words or scary topics.
 Always respond in English."""

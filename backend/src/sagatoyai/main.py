@@ -57,6 +57,11 @@ async def start_mqtt_service():
         mqtt.on_message("toy/+/audio/in", handler.handle_audio)
         mqtt.on_message("toy/+/text", handler.handle_text)
 
+        # Debug: subscribe to everything and print all messages
+        print("[DEBUG] Subscribing to # (all topics)")
+        await mqtt._client.subscribe("#")
+        mqtt.on_message("#", lambda t, p: print(f"[MQTT DEBUG] Received on {t}: {len(p)} bytes"))
+
         await mqtt.listen()
 
     except Exception as e:

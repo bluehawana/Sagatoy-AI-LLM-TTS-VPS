@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git remote:*)",
+      "Bash(git push:*)",
+      "Bash([ -d node_modules ])",
+      "Bash(npm install)",
+      "Bash(npm run build:*)",
+      "Bash(npm run dev:*)",
+      "Bash(chmod:*)",
+      "Bash(git reset:*)",
+      "Bash(cat:*)",
+      "Bash(npm install:*)",
+      "Bash(wrangler login:*)",
+      "Bash(npx wrangler pages deploy:*)",
+      "Bash(wrangler whoami:*)",
+      "Bash(npx wrangler pages project create sagatoy --production-branch=main)",
+      "Bash(npx wrangler:*)",
+      "Bash(dig:*)",
+      "Bash(curl:*)",
+      "Bash(ls:*)"
+    ]
+  }
+}

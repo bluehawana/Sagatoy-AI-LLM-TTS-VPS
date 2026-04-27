@@ -1,18 +1,19 @@
 services:
   api:
     build: .
-    ports:
-      - "8000:8000"
+    network_mode: host
     environment:
-      - REDIS_URL=redis://redis:6379
-      - MQTT_BROKER=mqtt
+      - REDIS_URL=redis://localhost:6379
+      - MQTT_BROKER=localhost
       - MQTT_PORT=1883
-    depends_on:
-      - redis
-      - mqtt
+    env_file:
+      - .env
     volumes:
       - ./src:/app/src
     restart: unless-stopped
+    depends_on:
+      - redis
+      - mqtt
 
   mqtt:
     image: eclipse-mosquitto:2
