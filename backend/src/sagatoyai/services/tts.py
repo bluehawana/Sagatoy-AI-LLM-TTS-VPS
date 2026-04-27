@@ -51,14 +51,22 @@ class TTSService:
             # Select voice based on language
             # Optimized for kindergarten-age children (3-10 years)
             if language == "sv":
-                # Warm, gentle Swedish
                 voice = os.getenv("TTS_VOICE_SV", "sv-SE-SofieNeural")
-                # Slightly slower for clarity
+                rate = os.getenv("TTS_RATE", "-10%")
+            elif language == "zh":
+                voice = os.getenv("TTS_VOICE_ZH", "zh-CN-XiaoxiaoNeural")
+                rate = os.getenv("TTS_RATE", "-10%")
+            elif language == "da":
+                voice = os.getenv("TTS_VOICE_DA", "da-DK-ChristelNeural")
+                rate = os.getenv("TTS_RATE", "-10%")
+            elif language == "no":
+                voice = os.getenv("TTS_VOICE_NO", "nb-NO-PernilleNeural")
+                rate = os.getenv("TTS_RATE", "-10%")
+            elif language == "fi":
+                voice = os.getenv("TTS_VOICE_FI", "fi-FI-NooraNeural")
                 rate = os.getenv("TTS_RATE", "-10%")
             else:
-                voice = os.getenv(
-                    "TTS_VOICE_EN", "en-US-JennyNeural")  # Warm English
-                # Slightly slower for clarity
+                voice = os.getenv("TTS_VOICE_EN", "en-US-JennyNeural")
                 rate = os.getenv("TTS_RATE", "-10%")
 
             communicate = edge_tts.Communicate(text, voice, rate=rate)
