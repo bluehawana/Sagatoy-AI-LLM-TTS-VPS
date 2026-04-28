@@ -34,6 +34,8 @@ async def start_mqtt_service():
     from sagatoyai.services.mqtt_service import FoloToyHandler, MQTTService
     from sagatoyai.services.stt import stt_service
     from sagatoyai.services.tts import tts_service
+    from sagatoyai.services.zai_llm import zai_llm_service
+    from sagatoyai.services.openai_llm import openai_llm_service
 
     broker = os.getenv("MQTT_BROKER", "localhost")
     port = int(os.getenv("MQTT_PORT", "1883"))
@@ -44,11 +46,14 @@ async def start_mqtt_service():
         await mqtt.connect()
         logger.info(f"MQTT service started on {broker}:{port}")
 
+        # Load balancer: OpenAI (fastest) → Groq → Z.ai (fallback)
         handler = FoloToyHandler(
             stt_service=stt_service,
-            llm_service=groq_service,
+            llm_service=openai_llm_service,
             tts_service=tts_service,
             mqtt_service=mqtt,
+            fallback_llm_service=groq_service,
+            third_fallback_llm_service=zai_llm_service,
         )
 
         mqtt.on_message("folotoy/+/audio", handler.handle_audio)
@@ -68,11 +73,28 @@ async def start_mqtt_service():
         logger.error(f"MQTT service error: {e}")
 
 
+udp_task = None
+audio_http_task = None
+
+
 @app.on_event("startup")
 async def startup_event():
     """Start background services on startup."""
-    global mqtt_task
+    global mqtt_task, udp_task, audio_http_task
 
+    # Start UDP Voice Server (port 8085)
+    if os.getenv("UDP_ENABLED", "true").lower() == "true":
+        from sagatoyai.services.udp_voice_server import start_udp_server
+        await start_udp_server()
+        logger.info("UDP voice server started on port 8085")
+
+    # Start Audio HTTP Server (port 8082)
+    if os.getenv("AUDIO_HTTP_ENABLED", "true").lower() == "true":
+        from sagatoyai.services.audio_http_server import start_audio_server
+        await start_audio_server()
+        logger.info("Audio HTTP server started on port 8082")
+
+    # Start MQTT Service
     if os.getenv("MQTT_ENABLED", "true").lower() == "true":
         mqtt_task = asyncio.create_task(start_mqtt_service())
         logger.info("MQTT service task created")

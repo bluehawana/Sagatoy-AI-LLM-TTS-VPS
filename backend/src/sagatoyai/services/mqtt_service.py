@@ -143,12 +143,119 @@ class FoloToyHandler:
         llm_service,
         tts_service,
         mqtt_service: MQTTService,
+        fallback_llm_service=None,
+        third_fallback_llm_service=None,
     ):
         self.stt = stt_service
         self.llm = llm_service
+        self.fallback_llm = fallback_llm_service
+        self.third_fallback_llm = third_fallback_llm_service
         self.tts = tts_service
         self.mqtt = mqtt_service
         self.sessions: dict[str, dict] = {}
+
+    def _handle_direct(self, text: str, language: str = "en") -> Optional[str]:
+        """Handle math/date directly without LLM."""
+        import re
+        from datetime import datetime
+        
+        text_lower = text.lower()
+        
+        # Math patterns
+        math_keywords = ["plus", "minus", "times", "multiplied", "divided", "gånger", "delat", "pluss", "miinus"]
+        if any(k in text_lower for k in math_keywords):
+            patterns = [
+                r'(\d+)\s*(?:plus|\+|times|\*|gånger)\s*(\d+)',
+                r'(\d+)\s*(?:minus|-)\s*(\d+)',
+                r'(\d+)\s*(?:/|divided|delat)\s*(\d+)',
+            ]
+            for pattern in patterns:
+                match = re.search(pattern, text_lower)
+                if match:
+                    a, b = int(match.group(1)), int(match.group(2))
+                    if "+" in text_lower or "plus" in text_lower or "pluss" in text_lower:
+                        return f"It's {a + b}! {a} plus {b} equals {a + b}. Great job!"
+                    elif "minus" in text_lower or "miinus" in text_lower:
+                        return f"It's {a - b}! {a} minus {b} equals {a - b}. Great job!"
+                    elif "times" in text_lower or "gånger" in text_lower or "*" in text_lower:
+                        return f"It's {a * b}! {a} times {b} equals {a * b}. Great job!"
+                    elif "/" in text_lower or "divided" in text_lower or "delat" in text_lower:
+                        if b != 0:
+                            return f"It's {round(a / b, 2)}! {a} divided by {b} equals {round(a / b, 2)}. Great job!"
+        
+        # Date/Day patterns
+        day_keywords = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday", "dag", "day", "vilken", "datum", "dato", "päivä"]
+        date_keywords = ["what date", "date today", "today", "what day", "vilket datum", "hvilken dag", "mikä päivä"]
+        
+        now = datetime.now()
+        if any(d in text_lower for d in day_keywords):
+            day_name_en = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+            return f"Today is {day_name_en[now.weekday()]}! Can you say it with me?"
+        
+        if any(d in text_lower for d in date_keywords):
+            return f"Today is {now.strftime('%B %d, %Y')}!"
+        
+        return None
+
+    async def _call_llm(self, text, language="en", session_id=None):
+        """Call LLM with fallback chain: primary → fallback → third_fallback."""
+        # Try direct handlers first (instant, no API call)
+        from sagatoyai.models import Intent
+        direct_result = self._handle_direct(text, language)
+        if direct_result:
+            print(f"[DEBUG] Direct handler: {direct_result[:50]}...")
+            return direct_result, Intent.GENERAL
+        
+        # Call LLM with fallback chain
+        services = [self.llm]
+        if self.fallback_llm:
+            services.append(self.fallback_llm)
+        if self.third_fallback_llm:
+            services.append(self.third_fallback_llm)
+
+        last_error = None
+        for i, service in enumerate(services):
+            try:
+                if session_id:
+                    result = await service.generate(text, session_id=session_id, language=language)
+                    return result, Intent.GENERAL
+                else:
+                    result, intent = await service.generate_conversation_response(text, language=language)
+                    return result, intent
+            except Exception as e:
+                last_error = e
+                logger.warning(f"LLM #{i+1} failed ({type(service).__name__}): {e}")
+                continue
+
+        raise last_error if last_error else RuntimeError("All LLM services failed")
+
+    def _detect_language(self, text: str) -> str:
+        """Auto-detect language from text input."""
+        text_lower = text.lower()
+        
+        # Check for Chinese characters
+        if any('\u4e00' <= c <= '\u9fff' for c in text):
+            return "zh"
+        
+        # Check for Nordic language patterns
+        swedish_words = ['hej', 'hur', 'mår', 'är', 'det', 'dag', 'vad', 'heter', 'berätta', 'saga', 'gånger', 'delat']
+        danish_words = ['hej', 'hvordan', 'har', 'det', 'dag', 'hvad', 'hedder', 'fortæl', 'historie', 'pluss', 'minus']
+        norwegian_words = ['hei', 'hvordan', 'har', 'det', 'dag', 'hva', 'heter', 'fortell', 'historie', 'pluss', 'minus']
+        finnish_words = ['hei', 'miten', ' voit', 'päivä', 'mikä', 'nimi', 'kerro', 'tarina', 'miinus', 'plus']
+        
+        swedish_count = sum(1 for w in swedish_words if w in text_lower)
+        danish_count = sum(1 for w in danish_words if w in text_lower)
+        norwegian_count = sum(1 for w in norwegian_words if w in text_lower)
+        finnish_count = sum(1 for w in finnish_words if w in text_lower)
+        
+        counts = {'sv': swedish_count, 'da': danish_count, 'no': norwegian_count, 'fi': finnish_count}
+        detected = max(counts, key=counts.get)
+        
+        if counts[detected] > 0:
+            return detected
+        
+        # Default to English
+        return "en"
 
     async def handle_audio(self, topic: str, payload: bytes):
         """Handle incoming audio from toy."""
@@ -172,10 +279,10 @@ class FoloToyHandler:
             transcript = await self.stt.transcribe(audio_data)
             logger.info(f"Transcript: {transcript.text}")
 
-            response = await self.llm.generate(
+            response = await self._call_llm(
                 transcript.text,
-                session_id=device_id,
                 language=transcript.language,
+                session_id=device_id,
             )
             logger.info(f"LLM response: {response}")
 
@@ -197,15 +304,20 @@ class FoloToyHandler:
             try:
                 data = json.loads(payload)
                 text = data.get("text", payload.decode())
-                language = data.get("language", "sv")
+                language = data.get("language", "auto")
             except json.JSONDecodeError:
                 text = payload.decode()
-                language = "sv"
+                language = "auto"
+
+            # Auto-detect language if not specified
+            if language == "auto" or not language:
+                language = self._detect_language(text)
+                print(f"[DEBUG] Auto-detected language: {language}")
 
             logger.info(f"Received text from {device_id}: {text}")
             print(f"[DEBUG] Processing text: {text}, lang: {language}")
 
-            response, _ = await self.llm.generate_conversation_response(
+            response, _ = await self._call_llm(
                 text,
                 language=language,
             )
