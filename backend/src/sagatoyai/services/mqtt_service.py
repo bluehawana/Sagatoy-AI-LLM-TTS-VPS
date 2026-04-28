@@ -145,11 +145,13 @@ class FoloToyHandler:
         mqtt_service: MQTTService,
         fallback_llm_service=None,
         third_fallback_llm_service=None,
+        fourth_fallback_llm_service=None,
     ):
         self.stt = stt_service
         self.llm = llm_service
         self.fallback_llm = fallback_llm_service
         self.third_fallback_llm = third_fallback_llm_service
+        self.fourth_fallback_llm = fourth_fallback_llm_service
         self.tts = tts_service
         self.mqtt = mqtt_service
         self.sessions: dict[str, dict] = {}
@@ -212,6 +214,8 @@ class FoloToyHandler:
             services.append(self.fallback_llm)
         if self.third_fallback_llm:
             services.append(self.third_fallback_llm)
+        if self.fourth_fallback_llm:
+            services.append(self.fourth_fallback_llm)
 
         last_error = None
         for i, service in enumerate(services):
