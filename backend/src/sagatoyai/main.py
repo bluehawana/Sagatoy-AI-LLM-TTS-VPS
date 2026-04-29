@@ -36,7 +36,7 @@ async def start_mqtt_service():
     from sagatoyai.services.tts import tts_service
     from sagatoyai.services.zai_llm import zai_llm_service
     from sagatoyai.services.openai_llm import openai_llm_service
-    from sagatoyai.services.nemotron import nim_service
+    from sagatoyai.services.nim_llm import nim_service, nemotron_service
 
     broker = os.getenv("MQTT_BROKER", "localhost")
     port = int(os.getenv("MQTT_PORT", "1883"))
