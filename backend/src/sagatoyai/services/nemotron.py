@@ -45,9 +45,11 @@ class NIMService:
             logger.warning("NVIDIA/NEMOTRON_API_KEY not set, NIM will not work")
 
         raw_url = os.getenv("NEMOTRON_API_BASE", "https://integrate.api.nvidia.com/v1")
-        # Store the full API endpoint directly (handles both base URL and full endpoint in .env)
         self.api_url = os.path.join(raw_url, "chat/completions") if "chat/completions" not in raw_url else raw_url
-        logger.info(f"NIM endpoint: {self.api_url}, model: {self.model}")
+
+        model_id = os.getenv("NVIDIA_MODEL", "")
+        self.model = NIM_MODELS.get(model, NIM_MODELS.get(model_id, NIM_MODELS["nemotron-mini"]))
+        logger.info(f"NIM model: {self.model}, endpoint: {self.api_url}")
 
     async def generate_response(
         self,

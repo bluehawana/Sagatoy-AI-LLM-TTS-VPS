@@ -1,0 +1,5 @@
+# ESP-IDF Version
+set(ESP_IDF_VERSION "5.3")
+
+# Project Name
+set(PROJECT_VER "1.0.0")

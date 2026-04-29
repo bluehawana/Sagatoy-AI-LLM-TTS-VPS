@@ -19,7 +19,7 @@ from typing import Optional
 
 from sagatoyai.models import Intent
 from sagatoyai.services.groq_service import groq_service, GroqError
-from sagatoyai.services.openai_llm import openai_llm_service, OpenAIError
+from sagatoyai.services.openai_llm import openai_llm_service
 from sagatoyai.services.gemini import gemini_service, GeminiError
 from sagatoyai.services.nemotron import nim_service
 
