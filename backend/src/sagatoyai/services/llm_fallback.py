@@ -281,8 +281,8 @@ class LLMFallbackService:
         }
 
 
-# Global fallback service instance
-llm_fallback_service = LLMFallbackService(
-    primary=LLMProvider.GROQ,
-    fallbacks=[LLMProvider.NVIDIA, LLMProvider.GEMINI],
-)
+# Import new load balancer (delegates to it for backward compatibility)
+from sagatoyai.services.llm_load_balancer import llm_balancer, llm_fallback_service as new_fallback_service
+
+# Backward compatibility
+llm_fallback_service = new_fallback_service

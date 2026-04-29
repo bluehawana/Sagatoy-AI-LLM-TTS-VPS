@@ -29,8 +29,8 @@ class GroqService:
         else:
             self.client = Groq(api_key=self.api_key)
 
-        # Use fastest model for real-time toy responses
-        self.model = "llama-3.1-8b-instant"  # Much faster than 70b
+        # Use Groq's best free model — fast and powerful
+        self.model = "llama-3.3-70b-versatile"
 
     def _detect_intent(self, user_input: str) -> Intent:
         """Detect user intent from input."""
