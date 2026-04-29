@@ -1,4 +1,4 @@
-"""NVIDIA Nemotron LLM service for fast inference."""
+"""NVIDIA NIM LLM service - supports all open-source models via NVIDIA Inference Microservices."""
 
 import logging
 import os
@@ -10,22 +10,45 @@ from sagatoyai.models import Intent
 
 logger = logging.getLogger(__name__)
 
+# Available NIM models - can switch between them
+NIM_MODELS = {
+    # Fast & small (good for toys)
+    "nemotron-mini": "nvidia/nemotron-mini-4b-instruct",
+    "llama-3.1-8b": "meta/llama-3.1-8b-instruct",
+    "mistral-7b": "mistralai/mistral-7b-instruct-v0.3",
+    "qwen2.5-7b": "qwen/qwen2.5-7b-instruct",
+    "gemma-7b": "google/gemma-2-7b-it",
 
-class NemotronService:
-    """NVIDIA Nemotron service for LLM inference."""
+    # Medium
+    "llama-3.1-70b": "meta/llama-3.1-70b-instruct",
+    "mistral-nemo": "mistralai/mistral-nemo-12b-instruct-v2",
+    "qwen2.5-72b": "qwen/qwen2.5-72b-instruct",
 
-    def __init__(self, api_key: Optional[str] = None):
-        """Initialize Nemotron service.
+    # Large (slower but smarter)
+    "nemotron-ultra": "nvidia/nemotron-ultra-253k-v1",
+    "llama-3.3-70b": "meta/llama-3.3-70b-instruct",
+}
+
+
+class NIMService:
+    """NVIDIA NIM service - access to all open-source LLMs via integrate.api.nvidia.com."""
+
+    def __init__(self, api_key: Optional[str] = None, model: str = "nemotron-mini"):
+        """Initialize NIM service.
 
         Args:
-            api_key: NVIDIA API key (or from env NVIDIA_API_KEY)
+            api_key: NVIDIA API key (or from env NVIDIA_API_KEY/NEMOTRON_API_KEY)
+            model: Model name from NIM_MODELS dict
         """
-        self.api_key = api_key or os.getenv("NVIDIA_API_KEY")
+        self.api_key = api_key or os.getenv("NVIDIA_API_KEY") or os.getenv("NEMOTRON_API_KEY")
         if not self.api_key:
-            logger.warning("NVIDIA_API_KEY not set, Nemotron will not work")
+            logger.warning("NVIDIA/NEMOTRON_API_KEY not set, NIM will not work")
 
-        self.base_url = os.getenv("NVIDIA_BASE_URL", "https://api.nvcf.nvidia.com/v2")
-        self.model = os.getenv("NVIDIA_MODEL", "nvidia/nemotron-mini-4b-instruct")
+        self.base_url = os.getenv("NEMOTRON_API_BASE", "https://integrate.api.nvidia.com/v1")
+
+        model_id = os.getenv("NVIDIA_MODEL", "")
+        self.model = NIM_MODELS.get(model, NIM_MODELS.get(model_id, NIM_MODELS["nemotron-mini"]))
+        logger.info(f"NIM using model: {self.model}")
 
     async def generate_response(
         self,
@@ -34,7 +57,7 @@ class NemotronService:
         temperature: float = 0.7,
         max_tokens: int = 200,
     ) -> str:
-        """Generate response using NVIDIA Nemotron.
+        """Generate response using NVIDIA NIM.
 
         Args:
             prompt: User prompt/question
@@ -54,6 +77,7 @@ class NemotronService:
             headers = {
                 "Authorization": f"Bearer {self.api_key}",
                 "Content-Type": "application/json",
+                "Accept": "application/json",
             }
 
             data = {
@@ -64,20 +88,32 @@ class NemotronService:
                 ],
                 "temperature": temperature,
                 "max_tokens": max_tokens,
+                "top_p": 0.9,
             }
 
             async with aiohttp.ClientSession() as session:
-                async with session.post(url, json=data, headers=headers) as response:
+                async with session.post(url, json=data, headers=headers, timeout=aiohttp.ClientTimeout(total=30)) as response:
                     if response.status != 200:
                         error_text = await response.text()
-                        raise RuntimeError(f"Nemotron failed: {response.status} - {error_text}")
+                        logger.error(f"NIM failed: {response.status} - {error_text}")
+                        raise RuntimeError(f"NIM failed: {response.status} - {error_text}")
 
                     result = await response.json()
 
-                    return result["choices"][0]["message"]["content"]
+                    choices = result.get("choices", [])
+                    if not choices:
+                        logger.error(f"NIM returned no choices: {result}")
+                        raise RuntimeError("NIM returned empty response")
+
+                    content = choices[0].get("message", {}).get("content", "")
+                    if not content:
+                        logger.error(f"NIM returned empty content: {result}")
+                        raise RuntimeError("NIM returned empty content")
+
+                    return content
 
         except Exception as e:
-            logger.error(f"Nemotron generation failed: {e}")
+            logger.error(f"NIM generation failed: {e}")
             raise RuntimeError(f"Failed to generate response: {e}")
 
     async def generate_conversation_response(
@@ -176,5 +212,21 @@ Always respond in the same language as the child.""",
             return Intent.MATH
         return Intent.GENERAL
 
+    def list_available_models(self) -> list:
+        """Return list of available NIM model names."""
+        return list(NIM_MODELS.keys())
 
-nemotron_service = NemotronService()
+    def set_model(self, model_name: str):
+        """Switch to a different NIM model."""
+        if model_name in NIM_MODELS:
+            self.model = NIM_MODELS[model_name]
+            logger.info(f"Switched NIM model to: {self.model}")
+        else:
+            logger.warning(f"Unknown model: {model_name}. Available: {list(NIM_MODELS.keys())}")
+
+
+# Global instances
+nim_service = NIMService()
+
+# Backward compatibility alias
+nemotron_service = nim_service

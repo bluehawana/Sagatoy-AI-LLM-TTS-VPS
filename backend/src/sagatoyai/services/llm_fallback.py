@@ -12,6 +12,7 @@ from typing import Optional, Callable, Awaitable
 from sagatoyai.models import Intent
 from sagatoyai.services.groq_service import groq_service, GroqError
 from sagatoyai.services.gemini import gemini_service, GeminiError
+from sagatoyai.services.nemotron import nim_service
 
 logger = logging.getLogger(__name__)
 
@@ -20,6 +21,7 @@ class LLMProvider(str, Enum):
     """Available LLM providers."""
 
     GROQ = "groq"
+    NVIDIA = "nvidia"
     GEMINI = "gemini"
     OLLAMA = "ollama"
 
@@ -95,6 +97,19 @@ class LLMFallbackService:
             context=context,
         )
 
+    async def _call_nim(
+        self,
+        user_input: str,
+        language: str,
+        context: Optional[list] = None,
+    ) -> tuple[str, Intent]:
+        """Call NVIDIA NIM LLM."""
+        return await nim_service.generate_conversation_response(
+            user_input=user_input,
+            language=language,
+            context=context,
+        )
+
     async def _call_gemini(
         self,
         user_input: str,
@@ -118,6 +133,8 @@ class LLMFallbackService:
         """Call specific LLM provider."""
         if provider == LLMProvider.GROQ:
             return await self._call_groq(user_input, language, context)
+        elif provider == LLMProvider.NVIDIA:
+            return await self._call_nim(user_input, language, context)
         elif provider == LLMProvider.GEMINI:
             return await self._call_gemini(user_input, language, context)
         else:
@@ -154,6 +171,10 @@ class LLMFallbackService:
             healthy_providers = providers
             # Reset failure counts
             self._provider_failures = {}
+
+        last_error = None
+        fallback_used = False
+        fallback_reason = None
 
         last_error = None
         fallback_used = False
@@ -263,5 +284,5 @@ class LLMFallbackService:
 # Global fallback service instance
 llm_fallback_service = LLMFallbackService(
     primary=LLMProvider.GROQ,
-    fallbacks=[LLMProvider.GEMINI],
+    fallbacks=[LLMProvider.NVIDIA, LLMProvider.GEMINI],
 )

@@ -36,7 +36,7 @@ async def start_mqtt_service():
     from sagatoyai.services.tts import tts_service
     from sagatoyai.services.zai_llm import zai_llm_service
     from sagatoyai.services.openai_llm import openai_llm_service
-    from sagatoyai.services.nemotron import nemotron_service
+    from sagatoyai.services.nemotron import nim_service
 
     broker = os.getenv("MQTT_BROKER", "localhost")
     port = int(os.getenv("MQTT_PORT", "1883"))
@@ -47,14 +47,14 @@ async def start_mqtt_service():
         await mqtt.connect()
         logger.info(f"MQTT service started on {broker}:{port}")
 
-        # Load balancer: OpenAI → Groq → Nemotron → Z.ai (fallback)
+        # MQTT handler LLM chain: NVIDIA (nim_service) → OpenAI → Groq → Z.ai
         handler = FoloToyHandler(
             stt_service=stt_service,
-            llm_service=openai_llm_service,
+            llm_service=nim_service,
             tts_service=tts_service,
             mqtt_service=mqtt,
-            fallback_llm_service=groq_service,
-            third_fallback_llm_service=nemotron_service,
+            fallback_llm_service=openai_llm_service,
+            third_fallback_llm_service=groq_service,
             fourth_fallback_llm_service=zai_llm_service,
         )
 
