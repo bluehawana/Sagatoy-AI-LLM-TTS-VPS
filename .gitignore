@@ -88,3 +88,6 @@ backend/final_test.mp3
 # backend/test_gemini.py
 # backend/list_models.py
 # backend/test_wakeword.py
+
+# Working diaries (dev-only, not synced to VPS)
+docs/working-diary/

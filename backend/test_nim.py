@@ -34,7 +34,7 @@ async def test_model(model_name: str = "nemotron-mini"):
     nim_service.set_model(model_name)
     print(f"Using model ID: {nim_service.model}")
     print(f"API Key configured: {bool(nim_service.api_key)}")
-    print(f"Base URL: {nim_service.base_url}")
+    print(f"API URL: {nim_service.api_url}")
 
     prompt = "Hello! I'm a child. Tell me a very short and fun greeting, one sentence."
 
