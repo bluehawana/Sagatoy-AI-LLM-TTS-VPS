@@ -20,6 +20,8 @@
 // Configuration
 const char* AP_SSID = "Sagatoy-Setup";
 const char* AP_PASSWORD = "sagatoy123";  // Simple password for families
+// SECURITY NOTE: Change this password in production!
+// Consider using a random password generated per-device
 const char* AP_IP = "192.168.1.1";
 
 // DNS for captive portal
